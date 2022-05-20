@@ -1,16 +1,25 @@
 let mousePressedAt;
 let mouseReleasedAt;
-let _event;
+let whatIsHappening;
+let colors;
+let stuffToDraw = [];
 
 function setup() {
+  colors = new Colors();
   createCanvas(1600, 800);
-  background(100);
+  background(colors.background);
 
   noLoop();
 }
 
 function draw() {
-  switch (_event){
+  background(colors.background);
+
+  for (const stuff of stuffToDraw){
+    stuff.drawMe(colors);
+  }
+
+  switch (whatIsHappening){
     case "New rectangle":
       rectMode(CORNERS);
       rect(mousePressedAt.x, mousePressedAt.y, mouseX, mouseY);
@@ -18,19 +27,20 @@ function draw() {
   }
 }
 
-function mousePressed(){
+function mousePressed() {
   loop();
-  _event = "New rectangle";
+  whatIsHappening = "New rectangle";
   mousePressedAt = new Point(mouseX, mouseY);
-  console.log("Mouse pressed at: " + mousePressedAt.x + " " + mousePressedAt.y);
 }
 
-function mouseReleased(){
+function mouseReleased() {
   noLoop();
-  _event = "";
-  mouseReleasedAt = new Point(mouseX, mouseY);
-  console.log("Mouse released at: " + mouseReleasedAt.x + " " + mouseReleasedAt.y);
 
-  rectMode(CORNERS);
-  rect(mousePressedAt.x, mousePressedAt.y, mouseReleasedAt.x, mouseReleasedAt.y);
+  whatIsHappening = "";
+  mouseReleasedAt = new Point(mouseX, mouseY);
+  
+  let rectangle = new Rectangle(mousePressedAt, mouseReleasedAt);
+
+  stuffToDraw.push(rectangle);
+  redraw();
 }
