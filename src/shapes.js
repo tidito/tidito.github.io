@@ -4,6 +4,11 @@ class Rectangle{
     this.p2 = p2;
   }
 
+  static fromPointWidthHeight(p, w, h){
+    let p2 = new Point(p.x + w, p.y + h);
+    return new Rectangle(p, p2);
+  }
+
   drawMe(colors){
     rectMode(CORNERS);
     noStroke();
@@ -22,8 +27,12 @@ class Line {
   drawMe(colors){
     stroke(colors.element);
     noFill();
+    beginShape();
+
     for (let i = 0; i <= this.points.lastIndexOf; i++) {
       vertex(this.this.points[i].x, this.this.points[i].y);
     }
+
+    endShape();
   }
 }
