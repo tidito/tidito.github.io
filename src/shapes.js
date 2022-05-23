@@ -9,10 +9,10 @@ class Rectangle{
     return new Rectangle(p, p2);
   }
 
-  drawMe(colors){
+  drawMe(){
     rectMode(CORNERS);
     noStroke();
-    fill(colors.container);
+    fill(Colors.container);
     rect(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
   }
 }
@@ -24,8 +24,8 @@ class Line {
     this.points.push(p2);
   }
 
-  drawMe(colors){
-    stroke(colors.element);
+  drawMe(){
+    stroke(Colors.element);
     noFill();
     beginShape();
 

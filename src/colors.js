@@ -1,7 +1,5 @@
 class Colors{
-  constructor(){
-    this.background = (100);
-    this.container = (150);
-    this.element = (255);
-  }
+  static background = (100);
+  static container = (150);
+  static element = (255);
 }

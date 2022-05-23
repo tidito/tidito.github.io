@@ -1,60 +1,49 @@
 let mousePressedAt;
 let mouseReleasedAt;
 let whatIsHappening;
-let colors;
-let stuffToDraw = [];
-let cyclogramContainers = [];
+let drawables = [];
+let diagrams;
 
 function setup() {
-  colors = new Colors();
   createCanvas(1600, 800);
-  background(colors.background);
+  background(Colors.background);
+  diagrams = new Diagrams();
+  drawables.push(diagrams);
+  addDiagrams();
   
-  addContainers();
 
   noLoop();
 }
 
-function addContainers(){
-  containersHeight = 
-    Dimensions.cyclogramHeight 
-    + (2 * Dimensions.margin)
-
+function addDiagrams(){
   for (i = 0; i < 3; i++){
-    let rectangle = Rectangle.fromPointWidthHeight(
-      p = Dimensions.cyclogramsTopLeft.offseted(0, i * (containersHeight + Dimensions.margin)),
-      w = Dimensions.cyclogramWidth,
-      h = containersHeight
-    )
-
-    cyclogramContainers.push(rectangle);
+    diagrams.addElement();
   }
-
-  stuffToDraw.push(cyclogramContainers);
+  console.log(diagrams.diagrams)
 }
 
 function draw() {
-  background(colors.background);
+  background(Colors.background);
 
-  for (const stuff of stuffToDraw){
-    drawStuff(stuff);
+  for (const drawable of drawables){
+    drawDrawable(drawable);
   }
 
   switch (whatIsHappening){
     case "New rectangle":
       mouseAt = new Point(mouseX, mouseY);
       let rectangle = new Rectangle(mousePressedAt, mouseAt);
-      rectangle.drawMe(colors);
+      rectangle.drawMe();
 
       break;
   }
 }
 
-function drawStuff(stuff){
-  if (Array.isArray(stuff)) {
-    for (const element of stuff) drawStuff(element);
+function drawDrawable(drawable){
+  if (Array.isArray(drawable)) {
+    for (const element of drawable) drawDrawable(element);
   } else {
-    stuff.drawMe(colors);
+    drawable.drawMe();
   }
 }
 
@@ -72,6 +61,6 @@ function mouseReleased() {
   
   let rectangle = new Rectangle(mousePressedAt, mouseReleasedAt);
 
-  stuffToDraw.push(rectangle);
+  drawables.push(rectangle);
   redraw();
 }
