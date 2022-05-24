@@ -10,29 +10,13 @@ class Rectangle{
   }
 
   drawMe(){
+    this.drawMeInColor(Colors.container);
+  }
+
+  drawMeInColor(color){
     rectMode(CORNERS);
     noStroke();
-    fill(Colors.container);
+    fill(color);
     rect(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
-  }
-}
-
-class Line {
-  constructor(p1, p2){
-    this.points = [];
-    this.points.push(p1);
-    this.points.push(p2);
-  }
-
-  drawMe(){
-    stroke(Colors.element);
-    noFill();
-    beginShape();
-
-    for (let i = 0; i <= this.points.lastIndexOf; i++) {
-      vertex(this.this.points[i].x, this.this.points[i].y);
-    }
-
-    endShape();
   }
 }

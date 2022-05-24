@@ -2,13 +2,15 @@ class Diagrams{
   constructor() {
     this.name = 'Name';
     this.diagrams = [];
+
+    this.stepSize = 10;
   }
 
-  addElement() {
-    this.diagrams.push(new Diagram());
+  addDiagram(number) {
+    this.diagrams.push(new Diagram(number, this));
   }
 
-  removeElement(index) {
+  removeDiagram(index) {
     this.diagrams.splice(index, 1);
   }
 

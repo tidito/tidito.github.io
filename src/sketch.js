@@ -3,38 +3,48 @@ let mouseReleasedAt;
 let whatIsHappening;
 let drawables = [];
 let diagrams;
+let selectedDiagram;
 
 function setup() {
   createCanvas(1600, 800);
-  background(Colors.background);
   diagrams = new Diagrams();
   drawables.push(diagrams);
   addDiagrams();
-  
 
   noLoop();
 }
 
 function addDiagrams(){
   for (i = 0; i < 3; i++){
-    diagrams.addElement();
+    diagrams.addDiagram(i);
   }
-  console.log(diagrams.diagrams)
 }
 
 function draw() {
-  background(Colors.background);
+  clear();
 
   for (const drawable of drawables){
     drawDrawable(drawable);
   }
+  let rectangle;
+  mouseAt = new Point(mouseX, mouseY);
 
   switch (whatIsHappening){
-    case "New rectangle":
-      mouseAt = new Point(mouseX, mouseY);
-      let rectangle = new Rectangle(mousePressedAt, mouseAt);
-      rectangle.drawMe();
+    case "New high state":
+      let start = 
+        new Point(
+          selectedDiagram.xPositionStepsToPixels(
+            selectedDiagram.xPositionPixelsToSteps(mousePressedAt.x)), 
+          selectedDiagram.statesArea.p1.y);
 
+      let end = 
+        new Point(
+          selectedDiagram.xPositionStepsToPixels(
+            selectedDiagram.xPositionPixelsToSteps(mouseAt.x)), 
+          selectedDiagram.statesArea.p2.y);
+
+      rectangle = new Rectangle(start, end);
+      rectangle.drawMeInColor(Colors.states);
       break;
   }
 }
@@ -51,16 +61,41 @@ function mousePressed() {
   loop();
   whatIsHappening = "New rectangle";
   mousePressedAt = new Point(mouseX, mouseY);
+
+  for (let diagram of diagrams.diagrams){
+    if (diagram.mouseInStatesArea()){
+      selectedDiagram = diagram;
+      whatIsHappening = "New high state";
+      break;
+    }
+  }
+
 }
 
 function mouseReleased() {
   noLoop();
 
-  whatIsHappening = "";
   mouseReleasedAt = new Point(mouseX, mouseY);
-  
-  let rectangle = new Rectangle(mousePressedAt, mouseReleasedAt);
 
-  drawables.push(rectangle);
+  switch (whatIsHappening){
+    case "New high state":
+      let start_steps = 
+        min(
+          selectedDiagram.xPositionPixelsToSteps(mousePressedAt.x),
+          selectedDiagram.xPositionPixelsToSteps(mouseReleasedAt.x));
+      let length_steps = 
+        abs(
+          selectedDiagram.xPositionPixelsToSteps(mouseReleasedAt.x)
+          - selectedDiagram.xPositionPixelsToSteps(mousePressedAt.x));
+
+      selectedDiagram.addHighState(
+        new HighState(
+          start_steps,
+          length_steps,
+          selectedDiagram));
+      break;
+  }
+
+  whatIsHappening = "";
   redraw();
 }
