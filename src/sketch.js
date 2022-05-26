@@ -87,12 +87,14 @@ function mouseReleased() {
         abs(
           selectedDiagram.xPositionPixelsToSteps(mouseReleasedAt.x)
           - selectedDiagram.xPositionPixelsToSteps(mousePressedAt.x));
-
-      selectedDiagram.addHighState(
-        new HighState(
-          start_steps,
-          length_steps,
-          selectedDiagram));
+      
+      if (length_steps > 0) {
+        selectedDiagram.addHighState(
+          new HighState(
+            start_steps,
+            length_steps,
+            selectedDiagram));
+      }
       break;
   }
 
