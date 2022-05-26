@@ -4,6 +4,7 @@ let whatIsHappening;
 let drawables = [];
 let diagrams;
 let selectedDiagram;
+let selectedHighState;
 
 function setup() {
   createCanvas(1600, 800);
@@ -58,27 +59,35 @@ function drawDrawable(drawable){
 }
 
 function mousePressed() {
-  loop();
-  whatIsHappening = "New rectangle";
   mousePressedAt = new Point(mouseX, mouseY);
+  selectedDiagram = null;
+  selectedHighState = null;
 
+  diagramsLoop:
   for (let diagram of diagrams.diagrams){
+    for (let highState of diagram.highStates){
+      if (highState.isMouseOver()){
+        selectedHighState = highState;
+        whatIsHappening = "Selected high state";
+        break diagramsLoop;
+      }
+    }
     if (diagram.mouseInStatesArea()){
       selectedDiagram = diagram;
       whatIsHappening = "New high state";
-      break;
+      loop();
+      break diagramsLoop;
     }
   }
 
 }
 
 function mouseReleased() {
-  noLoop();
-
   mouseReleasedAt = new Point(mouseX, mouseY);
 
   switch (whatIsHappening){
     case "New high state":
+      noLoop();
       let start_steps = 
         min(
           selectedDiagram.xPositionPixelsToSteps(mousePressedAt.x),
@@ -95,9 +104,26 @@ function mouseReleased() {
             length_steps,
             selectedDiagram));
       }
+      redraw();
       break;
+      case "Selected high state":
+        if (selectedHighState.isMouseOver()){
+          redraw();
+          selectedHighState.drawMeInColor(Colors.selectedState);
+        }
   }
 
   whatIsHappening = "";
-  redraw();
+}
+
+function keyReleased(){
+  switch (key){
+    case 'x':
+      if (selectedHighState){
+        selectedHighState.diagram.removeHighState(selectedHighState);
+        selectedHighState = null;
+        redraw();
+      }
+      break;
+  }
 }

@@ -18,15 +18,24 @@ class HighState{
         this.p1.x + this.length_steps * this.diagram.diagrams.stepSize,
         this.diagram.statesArea.p2.y
       );
-
-    
   }
 
+  isMouseOver(){
+    let xInRange = this.p1.x <= mouseX && mouseX <= this.p2.x;
+    let yInRange = this.p1.y <= mouseY && mouseY <= this.p2.y;
+
+    return xInRange && yInRange;
+  }
+
+
   drawMe(){
+    this.drawMeInColor(Colors.states);
+  }
+
+  drawMeInColor(color){
     rectMode(CORNERS);
     noStroke();
-    fill(Colors.states);
+    fill(color);
     rect(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
-
   }
 }

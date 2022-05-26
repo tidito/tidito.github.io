@@ -22,8 +22,15 @@ class Diagram{
     this.highStates.push(highState);
   }
 
-  removeHighState (index){
+  removeHighStateByIndex (index){
     this.highStates.splice(index, 1);
+  }
+
+  removeHighState(highState){
+    let index = this.highStates.indexOf(highState);
+    if (index >= 0){
+      this.removeHighStateByIndex(index);
+    }
   }
 
   drawMe() {
@@ -36,11 +43,13 @@ class Diagram{
     strokeWeight(Dimensions.lowStateLineWidth);
     stroke(Colors.states);
 
+    let upBy = ceil(Dimensions.lowStateLineWidth * 0.5);
+
     line(
       this.statesArea.p1.x,
-      this.statesArea.p2.y,
+      this.statesArea.p2.y-upBy,
       this.statesArea.p2.x,
-      this.statesArea.p2.y
+      this.statesArea.p2.y-upBy
       )
   }
 
