@@ -1,5 +1,6 @@
 class Colors{
-  static background = (100);
-  static container = (150);
-  static states = (255);
+  static background = '#0f1022'; //(100);
+  static container = '#182036'; //(150);
+  static states = '#228de2'; //(255);
+  static selectedState = '#5042d0';
 }
