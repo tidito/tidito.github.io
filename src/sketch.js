@@ -1,7 +1,6 @@
 let mousePressedAt;
 let mouseReleasedAt;
 let whatIsHappening;
-let drawables = [];
 let diagrams;
 let selectedDiagram;
 let selectedHighState;
@@ -9,7 +8,6 @@ let selectedHighState;
 function setup() {
   createCanvas(1600, 800);
   diagrams = new Diagrams();
-  drawables.push(diagrams);
   addDiagrams();
 
   noLoop();
@@ -23,10 +21,8 @@ function addDiagrams(){
 
 function draw() {
   clear();
+  diagrams.drawMe();
 
-  for (const drawable of drawables){
-    drawDrawable(drawable);
-  }
   let rectangle;
   mouseAt = new Point(mouseX, mouseY);
 
