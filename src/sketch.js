@@ -1,6 +1,6 @@
 let mousePressedAt;
 let mouseReleasedAt;
-let whatIsHappening;
+let action = Actions.none;
 let diagrams;
 let selectedDiagram;
 let selectedHighState;
@@ -8,12 +8,18 @@ let selectedHighState;
 function setup() {
   createCanvas(1600, 800);
   diagrams = new Diagrams();
-  addDiagrams();
+  let restoredDiagrams = getItem(Names.storedDiagrams);
+
+  if (!restoredDiagrams){
+    addDiagrams();
+  } else {
+    diagrams.rebuild(restoredDiagrams);
+  }
 
   noLoop();
 }
 
-function addDiagrams(){
+function addDiagrams() {
   for (i = 0; i < 3; i++){
     diagrams.addDiagram(i);
   }
@@ -26,8 +32,8 @@ function draw() {
   let rectangle;
   mouseAt = new Point(mouseX, mouseY);
 
-  switch (whatIsHappening){
-    case "New high state":
+  switch (action){
+    case Actions.newHighState:
       let start = 
         new Point(
           selectedDiagram.xPositionStepsToPixels(
@@ -46,43 +52,37 @@ function draw() {
   }
 }
 
-function drawDrawable(drawable){
-  if (Array.isArray(drawable)) {
-    for (const element of drawable) drawDrawable(element);
-  } else {
-    drawable.drawMe();
-  }
-}
-
 function mousePressed() {
   mousePressedAt = new Point(mouseX, mouseY);
   selectedDiagram = null;
   selectedHighState = null;
 
-  diagramsLoop:
+  action = Actions.none;
+
   for (let diagram of diagrams.diagrams){
     for (let highState of diagram.highStates){
       if (highState.isMouseOver()){
         selectedHighState = highState;
-        whatIsHappening = "Selected high state";
-        break diagramsLoop;
+        action = Actions.selectHighState;
+        break;
       }
     }
     if (diagram.mouseInStatesArea()){
       selectedDiagram = diagram;
-      whatIsHappening = "New high state";
-      loop();
-      break diagramsLoop;
+      if (action == Actions.none){
+        action = Actions.newHighState;
+        loop();
+      }
+      break;
     }
   }
-
 }
 
 function mouseReleased() {
   mouseReleasedAt = new Point(mouseX, mouseY);
 
-  switch (whatIsHappening){
-    case "New high state":
+  switch (action){
+    case Actions.newHighState:
       noLoop();
       let start_steps = 
         min(
@@ -102,24 +102,32 @@ function mouseReleased() {
       }
       redraw();
       break;
-      case "Selected high state":
+      case Actions.selectHighState:
         if (selectedHighState.isMouseOver()){
           redraw();
           selectedHighState.drawMeInColor(Colors.selectedState);
         }
+      break;
   }
-
-  whatIsHappening = "";
+  diagrams.storeData();
+  action = Actions.none;
 }
 
 function keyReleased(){
   switch (key){
     case 'x':
       if (selectedHighState){
-        selectedHighState.diagram.removeHighState(selectedHighState);
+        selectedDiagram.removeHighState(selectedHighState);
         selectedHighState = null;
         redraw();
       }
       break;
+    case 'c':
+      diagrams = new Diagrams();
+      addDiagrams();
+      clearStorage();
+      redraw();
+      break;
   }
+  diagrams.storeData();
 }

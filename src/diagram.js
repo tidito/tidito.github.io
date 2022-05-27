@@ -3,8 +3,16 @@ class Diagram{
     this.name = 'Name';
     this.highStates = [];
     this.number = number;
-    this.diagrams = diagrams
+    this.stepSize = diagrams.stepSize;
 
+    this.topLeft;
+    this.area;
+    this.statesArea;
+
+    this.calculateDimensions();
+  }
+
+  calculateDimensions(){
     this.topLeft =
       Dimensions.diagramsTopLeft.offseted(
         0, this.number * Dimensions.containersSpan);
@@ -16,6 +24,21 @@ class Diagram{
         this.area.p1.offseted(Dimensions.nameWidth + (2 * Dimensions.margin), Dimensions.margin),
         this.area.p2.offseted(-Dimensions.margin, -Dimensions.margin)
       );
+  }
+
+  rebuild(restoredDiagram){
+    this.name = restoredDiagram.name;
+    this.number = restoredDiagram.number;
+    this.stepSize = restoredDiagram.stepSize;
+    
+    this.calculateDimensions();
+
+    for (let restoredHighState of restoredDiagram.highStates){
+      let highState = new HighState(0, 0, this)
+      highState.rebuild(restoredHighState, this);
+
+      this.highStates.push(highState);
+    }
   }
 
   addHighState (highState){
@@ -67,10 +90,10 @@ class Diagram{
   xPositionPixelsToSteps(position_px){
     position_px = MyMath.limit(position_px, this.statesArea.p1.x, this.statesArea.p2.x);
     let positionRelative_px = position_px - this.statesArea.p1.x;
-    return round(positionRelative_px/this.diagrams.stepSize);
+    return round(positionRelative_px/this.stepSize);
   }
 
   xPositionStepsToPixels(position_steps){
-    return this.statesArea.p1.x + position_steps * this.diagrams.stepSize;
+    return this.statesArea.p1.x + position_steps * this.stepSize;
   }
 }
