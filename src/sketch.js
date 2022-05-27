@@ -13,7 +13,12 @@ function setup() {
   if (!restoredDiagrams){
     addDiagrams();
   } else {
-    diagrams.rebuild(restoredDiagrams);
+    try {
+      diagrams.rebuild(restoredDiagrams);
+    } catch {
+      diagrams = new Diagrams();
+      addDiagrams();
+    }
   }
 
   noLoop();
@@ -49,6 +54,9 @@ function draw() {
       rectangle = new Rectangle(start, end);
       rectangle.drawMeInColor(Colors.states);
       break;
+  }
+  if (selectedHighState){
+    selectedHighState.drawMeInColor(Colors.selectedState);
   }
 }
 
@@ -105,7 +113,8 @@ function mouseReleased() {
       case Actions.selectHighState:
         if (selectedHighState.isMouseOver()){
           redraw();
-          selectedHighState.drawMeInColor(Colors.selectedState);
+        } else {
+          selectedHighState = null;
         }
       break;
   }
@@ -115,19 +124,45 @@ function mouseReleased() {
 
 function keyReleased(){
   switch (key){
-    case 'x':
-      if (selectedHighState){
-        selectedDiagram.removeHighState(selectedHighState);
-        selectedHighState = null;
-        redraw();
+    case 'w':
+      selectedHighState.changeLengthBy(1, selectedDiagram);
+      break;
+    case 's':
+      if (selectedHighState.length_steps > 1){
+        selectedHighState.changeLengthBy(-1, selectedDiagram);
+      } else {
+        removeSelectedHighState();
       }
       break;
+
+    case 'a':
+      selectedHighState.moveBy(-1, selectedDiagram);
+      break;
+    case 'd':
+      selectedHighState.moveBy(1, selectedDiagram);
+      break;
+
+    case 'x':
+      removeSelectedHighState();
+      break;
     case 'c':
-      diagrams = new Diagrams();
-      addDiagrams();
-      clearStorage();
-      redraw();
+      clearDiagrams();
       break;
   }
   diagrams.storeData();
+}
+
+function removeSelectedHighState() {
+  if (selectedHighState && selectedDiagram) {
+    selectedDiagram.removeHighState(selectedHighState);
+    selectedHighState = null;
+    redraw();
+  }
+}
+
+function clearDiagrams(){
+  diagrams = new Diagrams();
+  addDiagrams();
+  clearStorage();
+  redraw();
 }

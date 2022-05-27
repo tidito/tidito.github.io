@@ -2,6 +2,7 @@ class HighState{
   constructor(start_steps, length_steps, diagram){
     this.start_steps = start_steps;
     this.length_steps = length_steps;
+    this.maxStep_steps = diagram.xPositionPixelsToSteps(diagram.statesArea.p2.x);
 
     this.calculatePoints(diagram);
   }
@@ -22,6 +23,7 @@ class HighState{
   rebuild(restoredHighState, diagram){
     this.start_steps = restoredHighState.start_steps;
     this.length_steps = restoredHighState.length_steps;
+    this.maxStep_steps = restoredHighState.maxStep_steps;
 
     this.calculatePoints(diagram);
 
@@ -34,6 +36,20 @@ class HighState{
     return xInRange && yInRange;
   }
 
+  changeLengthBy(changeBy, diagram){
+    this.length_steps += changeBy;
+    this.calculatePoints(diagram);
+    redraw();
+  }
+
+  moveBy(dX, diagram){
+    if (this.start_steps + dX >= 0 
+        && this.start_steps + this.length_steps + dX <= this.maxStep_steps){
+      this.start_steps += dX;
+    }
+    this.calculatePoints(diagram);
+    redraw();
+  }
 
   drawMe(){
     this.drawMeInColor(Colors.states);
