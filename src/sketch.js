@@ -125,9 +125,11 @@ function mouseReleased() {
 function keyReleased(){
   switch (key){
     case 'w':
+      if (!selectedHighState) break;
       selectedHighState.changeLengthBy(1, selectedDiagram);
       break;
     case 's':
+      if (!selectedHighState) break;
       if (selectedHighState.length_steps > 1){
         selectedHighState.changeLengthBy(-1, selectedDiagram);
       } else {
@@ -136,13 +138,16 @@ function keyReleased(){
       break;
 
     case 'a':
+      if (!selectedHighState) break;
       selectedHighState.moveBy(-1, selectedDiagram);
       break;
     case 'd':
+      if (!selectedHighState) break;
       selectedHighState.moveBy(1, selectedDiagram);
       break;
 
     case 'x':
+      if (!selectedHighState) break;
       removeSelectedHighState();
       break;
     case 'c':

@@ -3,7 +3,8 @@ class Diagrams{
     this.name = 'Name';
     this.diagrams = [];
 
-    this.stepSize = 10;
+    this.ticks = 25;
+    this.stepSize = floor(Dimensions.diagramMaxWidth / this.ticks);
   }
 
   rebuild(restoredDiagrams){
@@ -15,6 +16,15 @@ class Diagrams{
       diagram.rebuild(restoredDiagram);
 
       this.diagrams.push(diagram);
+    }
+  }
+
+  updateTicks(ticks){
+    this.ticks = ticks;
+    this.stepSize = floor(Dimensions.diagramMaxWidth / this.ticks);
+
+    for (let diagram of this.diagrams){
+      diagram.updateTicks(this);
     }
   }
 

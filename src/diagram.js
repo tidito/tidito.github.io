@@ -3,13 +3,21 @@ class Diagram{
     this.name = 'Name';
     this.highStates = [];
     this.number = number;
-    this.stepSize = diagrams.stepSize;
+    
+    this.ticks;
+    this.stepSize;
+    this.updateTicks(diagrams);
 
     this.topLeft;
     this.area;
     this.statesArea;
 
     this.calculateDimensions();
+  }
+
+  updateTicks(diagrams){
+    this.ticks = diagrams.ticks;
+    this.stepSize = diagrams.stepSize;
   }
 
   calculateDimensions(){
@@ -21,8 +29,12 @@ class Diagram{
         this.topLeft, Dimensions.containerWidth, Dimensions.containerHeight);
     this.statesArea = 
       new Rectangle(
-        this.area.p1.offseted(Dimensions.nameWidth + (2 * Dimensions.margin), Dimensions.margin),
-        this.area.p2.offseted(-Dimensions.margin, -Dimensions.margin)
+        this.area.p1.offseted(
+          Dimensions.nameWidth + (2 * Dimensions.margin), 
+          Dimensions.margin),
+        this.area.p2.offseted(
+          -Dimensions.margin, 
+          -Dimensions.margin)
       );
   }
 
@@ -30,6 +42,7 @@ class Diagram{
     this.name = restoredDiagram.name;
     this.number = restoredDiagram.number;
     this.stepSize = restoredDiagram.stepSize;
+    this.ticks = restoredDiagram.ticks;
     
     this.calculateDimensions();
 
@@ -58,8 +71,37 @@ class Diagram{
 
   drawMe() {
     this.area.drawMe();
+    this.drawTicks();
     this.drawLowStates();
     this.drawHighStates();
+  }
+
+  drawTicks(){
+    strokeWeight(Dimensions.tickWidth_px);
+
+    fill(Colors.ticks);
+    textSize(Dimensions.tickLabelSize_px);
+    textStyle(NORMAL);
+    textFont(Dimensions.labeledTickFont);
+    textAlign(CENTER, CENTER);
+
+    for (let i = 0; i<= this.ticks; i++){
+      let x = this.statesArea.p1.x + (i * this.stepSize);
+
+      if (i % Dimensions.labeledTickEvery == 0){
+        let y = this.statesArea.p2.y + (Dimensions.margin * 0.5);
+
+        noStroke();
+        text(i, x, y);
+      } else {
+        let yTop = this.statesArea.p2.y + Dimensions.tickYOffset_px;
+        let yBot = yTop + Dimensions.tickLength_px;
+
+        stroke(Colors.ticks);
+        line(x, yTop, x, yBot);
+      }
+
+    }
   }
 
   drawLowStates() {
