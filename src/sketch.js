@@ -149,7 +149,7 @@ function keyReleased(){
     case 'w':
       if (!selectedHighState) break;
       selectedHighState.changeLengthBy(1, selectedDiagram);
-      break;
+    break;
     case 's':
       if (!selectedHighState) break;
       if (selectedHighState.length_steps > 1){
@@ -157,25 +157,29 @@ function keyReleased(){
       } else {
         removeSelectedHighState();
       }
-      break;
+    break;
 
     case 'a':
       if (!selectedHighState) break;
       selectedHighState.moveBy(-1, selectedDiagram);
-      break;
+    break;
     case 'd':
       if (!selectedHighState) break;
       selectedHighState.moveBy(1, selectedDiagram);
-      break;
+    break;
 
     case 'x':
       if (!selectedHighState) break;
       removeSelectedHighState();
       break;
     case 'c':
-      clearDiagrams();
-      break;
-  }
+      switch (action){
+        case Actions.none:
+          clearDiagrams();
+        break;
+      }
+    break;
+    }
 
   switch (keyCode){
     case ENTER:
@@ -194,7 +198,7 @@ function keyReleased(){
         selectedDiagram = null;
         redraw();
       break;
-  }
+    }
   diagrams.storeData();
 }
 
