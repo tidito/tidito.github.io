@@ -4,9 +4,11 @@ let action = Actions.none;
 let diagrams;
 let selectedDiagram;
 let selectedHighState;
+let nameInput;
 
 function setup() {
   createCanvas(1600, 800);
+
   diagrams = new Diagrams();
   let restoredDiagrams = getItem(Names.storedDiagrams);
 
@@ -32,6 +34,7 @@ function addDiagrams() {
 
 function draw() {
   clear();
+  removeElements();
   diagrams.drawMe();
 
   let rectangle;
@@ -61,6 +64,13 @@ function draw() {
 }
 
 function mousePressed() {
+  if (action == Actions.setName){
+    if (selectedDiagram.mouseInNameArea()){
+      return;
+    } else {
+      redraw();
+    }
+  }
   mousePressedAt = new Point(mouseX, mouseY);
   selectedDiagram = null;
   selectedHighState = null;
@@ -80,6 +90,13 @@ function mousePressed() {
       if (action == Actions.none){
         action = Actions.newHighState;
         loop();
+      }
+      break;
+    } else if (diagram.mouseInNameArea()) {
+      if (action == Actions.none){
+        action = Actions.setName;
+        selectedDiagram = diagram;
+        displayNameInput(diagram);
       }
       break;
     }
@@ -109,17 +126,22 @@ function mouseReleased() {
             selectedDiagram));
       }
       redraw();
-      break;
-      case Actions.selectHighState:
-        if (selectedHighState.isMouseOver()){
-          redraw();
-        } else {
-          selectedHighState = null;
-        }
-      break;
+      action = Actions.none;
+    break;
+    case Actions.selectHighState:
+      if (selectedHighState.isMouseOver()){
+        redraw();
+      } else {
+        selectedHighState = null;
+      }
+    action = Actions.none;
+    break;
+    case Actions.setName:
+      nameInput.elt.focus();
+      nameInput.elt.select();
+    break;
   }
   diagrams.storeData();
-  action = Actions.none;
 }
 
 function keyReleased(){
@@ -154,6 +176,25 @@ function keyReleased(){
       clearDiagrams();
       break;
   }
+
+  switch (keyCode){
+    case ENTER:
+      if (selectedDiagram && action == Actions.setName){
+        selectedDiagram.setName(nameInput.value());
+
+        action = Actions.none;
+        selectedHighState = null;
+        selectedDiagram = null;
+        redraw();
+      }
+      break;
+      case ESCAPE:
+        action = Actions.none;
+        selectedHighState = null;
+        selectedDiagram = null;
+        redraw();
+      break;
+  }
   diagrams.storeData();
 }
 
@@ -170,4 +211,14 @@ function clearDiagrams(){
   addDiagrams();
   clearStorage();
   redraw();
+}
+
+function displayNameInput(diagram){
+  nameInput = createInput();
+  nameInput.position(
+    diagram.nameArea.p1.x + Dimensions.margin, 
+    0.5 * (diagram.nameArea.p1.y + diagram.nameArea.p2.y),
+    'absolute');
+  nameInput.size(Dimensions.nameWidth);
+  nameInput.value(diagram.name);
 }

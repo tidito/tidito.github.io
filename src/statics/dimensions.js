@@ -14,6 +14,9 @@ class Dimensions{
   static tickLabelSize_px = 11;
   static labeledTickFont = 'Courier New';
 
+  static nameFont = 'Tahoma';
+  static nameSize_px = 16;
+
   static containerWidth = 
     Dimensions.diagramMaxWidth
     + (3 * Dimensions.margin)

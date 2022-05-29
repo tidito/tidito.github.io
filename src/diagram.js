@@ -11,6 +11,7 @@ class Diagram{
     this.topLeft;
     this.area;
     this.statesArea;
+    this.nameArea;
 
     this.calculateDimensions();
   }
@@ -35,6 +36,15 @@ class Diagram{
         this.area.p2.offseted(
           -Dimensions.margin, 
           -Dimensions.margin)
+      );
+    this.nameArea = 
+      new Rectangle(
+        this.area.p1.offseted(
+          Dimensions.margin, 
+          Dimensions.margin),
+        this.area.p1.offseted(
+          Dimensions.nameWidth + Dimensions.margin, 
+          Dimensions.containerHeight - Dimensions.margin)
       );
   }
 
@@ -71,9 +81,24 @@ class Diagram{
 
   drawMe() {
     this.area.drawMe();
+    this.drawName();
     this.drawTicks();
     this.drawLowStates();
     this.drawHighStates();
+  }
+
+  drawName(){
+    noStroke();
+    textSize(Dimensions.nameSize_px);
+    textStyle(BOLD);
+    textFont(Dimensions.nameFont);
+    textAlign(RIGHT, CENTER);
+    fill(Colors.ticks);
+
+    let x = this.nameArea.p2.x;
+    let y = 0.5 * (this.nameArea.p1.y + this.nameArea.p2.y);
+
+    text(this.name, x, y);
   }
 
   drawTicks(){
@@ -122,9 +147,20 @@ class Diagram{
     this.highStates.forEach(state => state.drawMe());
   }
 
+  setName(name) {
+    this.name = name;
+  }
+
   mouseInStatesArea(){
     let xInRange = this.statesArea.p1.x <= mouseX && mouseX <= this.statesArea.p2.x;
     let yInRange = this.area.p1.y <= mouseY && mouseY <= this.area.p2.y;
+
+    return xInRange && yInRange;
+  }
+
+  mouseInNameArea(){
+    let xInRange = this.nameArea.p1.x <= mouseX && mouseX <= this.nameArea.p2.x;
+    let yInRange = this.nameArea.p1.y <= mouseY && mouseY <= this.nameArea.p2.y;
 
     return xInRange && yInRange;
   }
