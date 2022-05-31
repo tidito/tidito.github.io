@@ -7,7 +7,7 @@ class Dimensions{
 
   static diagramsTopLeft = new Point(Dimensions.menuWidth + 2*Dimensions.margin, Dimensions.margin);
   static diagramHeight = 60;
-  static diagramMaxWidth = 1000;
+  static diagramMaxWidth = 1200;
   static nameWidth = 150;
   static lowStateLineWidth = 2;
 

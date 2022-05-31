@@ -20,7 +20,6 @@ class Diagrams{
   }
 
   setTicks(ticks){
-    console.log('Setting ticks to: ' + ticks);
     this.ticks = ticks;
     this.stepSize = floor(Dimensions.diagramMaxWidth / this.ticks);
 
@@ -31,7 +30,9 @@ class Diagrams{
   }
 
   addDiagram(number) {
+    console.log(this);
     this.diagrams.push(new Diagram(number, this));
+    redraw();
   }
 
   removeDiagram(index) {

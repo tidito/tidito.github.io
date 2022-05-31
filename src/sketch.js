@@ -7,7 +7,10 @@ let selectedHighState;
 let nameInput;
 
 function setup() {
-  canvas = createCanvas(1600, 800);
+  canvas = 
+    createCanvas(
+      windowWidth, 
+      windowHeight);
   canvas.position(0,0);
 
   diagrams = new Diagrams();
@@ -227,7 +230,6 @@ function displayNameInput(diagram){
 }
 
 function drawMenu(){
-  rectMode(CORNER);
   let menuDiv = createDiv();
   menuDiv.position(Dimensions.menuX, Dimensions.menuY);
   menuDiv.size(Dimensions.menuWidth, windowHeight-(2*Dimensions.margin));
@@ -237,17 +239,17 @@ function drawMenu(){
   menuDiv.style('background-color', Colors.container)
 
   drawMenuTicks(menuDiv);
+  drawMenuAddDiagram(menuDiv);
   drawMenuClearAll(menuDiv);
 }
 
 function drawMenuTicks(menuDiv) {
   let ticksDiv = createDiv();
   ticksDiv.parent(menuDiv);
-  ticksDiv.position(Dimensions.margin, Dimensions.margin);
+  ticksDiv.style('margin', Dimensions.margin);
 
   let ticksParagraph = createP('Ticks:');
   ticksParagraph.parent(ticksDiv);
-  ticksParagraph.style('margin-top', 0);
 
   ticksEditors = ['-5', '-1', '+1', '+5'];
   let button;
@@ -262,13 +264,29 @@ function drawMenuTicks(menuDiv) {
     button.style('background-color', Colors.states);
     button.style('border-color', '#ffffff00');
     button.style('margin-right', Dimensions.margin*0.5);
-    button.size(4*Dimensions.margin,3*Dimensions.margin);
+    button.size(4*Dimensions.margin, 3*Dimensions.margin);
 
 
     button.mouseReleased(function () {
       diagrams.setTicks(diagrams.ticks + parseInt(ticksEditors[i]));
     });
   }
+}
+
+function drawMenuAddDiagram(menuDiv) {
+  let button = createButton('Add diagram');
+  button.parent(menuDiv);
+
+  button.style('color', Colors.ticks);
+  button.style('font-family', Dimensions.nameFont);
+  button.style('font-weight', 'bold');
+  button.style('background-color', Colors.states);
+  button.style('border-color', '#ffffff00');
+  button.style('margin', Dimensions.margin);
+
+  button.mouseReleased(function () {
+    diagrams.addDiagram(diagrams.diagrams.length);
+  });
 }
 
 function drawMenuClearAll(menuDiv) {
