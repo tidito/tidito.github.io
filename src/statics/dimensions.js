@@ -1,9 +1,14 @@
 class Dimensions{
-  static diagramsTopLeft = new Point(200, 20);
+  static margin = 10;
+
+  static menuX = Dimensions.margin;
+  static menuY = Dimensions.margin;
+  static menuWidth = 200;
+
+  static diagramsTopLeft = new Point(Dimensions.menuWidth + Dimensions.margin, 10);
   static diagramHeight = 60;
   static diagramMaxWidth = 1000;
   static nameWidth = 150;
-  static margin = 10;
   static lowStateLineWidth = 2;
 
   static tickLength_px = 3;
@@ -16,6 +21,7 @@ class Dimensions{
 
   static nameFont = 'Tahoma';
   static nameSize_px = 16;
+  static nameInputHeight = 30;
 
   static containerWidth = 
     Dimensions.diagramMaxWidth

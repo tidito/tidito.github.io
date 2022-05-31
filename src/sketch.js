@@ -7,7 +7,8 @@ let selectedHighState;
 let nameInput;
 
 function setup() {
-  createCanvas(1600, 800);
+  canvas = createCanvas(1600, 800);
+  canvas.position(0,0);
 
   diagrams = new Diagrams();
   let restoredDiagrams = getItem(Names.storedDiagrams);
@@ -36,6 +37,7 @@ function draw() {
   clear();
   removeElements();
   diagrams.drawMe();
+  drawMenu();
 
   let rectangle;
   mouseAt = new Point(mouseX, mouseY);
@@ -172,13 +174,6 @@ function keyReleased(){
       if (!selectedHighState) break;
       removeSelectedHighState();
       break;
-    case 'c':
-      switch (action){
-        case Actions.none:
-          clearDiagrams();
-        break;
-      }
-    break;
     }
 
   switch (keyCode){
@@ -202,6 +197,10 @@ function keyReleased(){
   diagrams.storeData();
 }
 
+function windowResized(){
+  redraw();
+}
+
 function removeSelectedHighState() {
   if (selectedHighState && selectedDiagram) {
     selectedDiagram.removeHighState(selectedHighState);
@@ -219,10 +218,61 @@ function clearDiagrams(){
 
 function displayNameInput(diagram){
   nameInput = createInput();
+  nameInput.size(Dimensions.nameWidth, Dimensions.nameInputHeight);
   nameInput.position(
-    diagram.nameArea.p1.x + Dimensions.margin, 
-    0.5 * (diagram.nameArea.p1.y + diagram.nameArea.p2.y),
+    diagram.nameArea.p1.x, 
+    0.5 * (diagram.nameArea.p1.y + diagram.nameArea.p2.y -Dimensions.nameInputHeight),
     'absolute');
-  nameInput.size(Dimensions.nameWidth);
   nameInput.value(diagram.name);
 }
+
+function drawMenu(){
+  rectMode(CORNER);
+  let menuDiv = createDiv();
+  menuDiv.position(Dimensions.menuX, Dimensions.menuY);
+  menuDiv.size(Dimensions.menuWidth, windowHeight-(2*Dimensions.margin));
+  menuDiv.style('color', Colors.ticks);
+  menuDiv.style('font-family', Dimensions.nameFont);
+  menuDiv.style('font-weight', 'bold');
+
+  drawMenuTicks(menuDiv);
+  drawMenuClearAll(menuDiv);
+}
+
+function drawMenuClearAll(menuDiv) {
+  let button = createButton('Clear all');
+  button.parent(menuDiv);
+
+  button.style('color', Colors.ticks);
+  button.style('font-family', Dimensions.nameFont);
+  button.style('font-weight', 'bold');
+  button.style('background-color', Colors.states);
+
+  button.style('position', 'absolute');
+  button.style('bottom', 0);
+  button.style('left', 0);
+
+  button.mouseReleased(clearDiagrams);
+}
+
+function drawMenuTicks(menuDiv) {
+  let ticksParagraph = createP('Ticks:');
+  ticksParagraph.parent(menuDiv);
+
+  ticksEditors = ['-5', '-1', '+1', '+5'];
+  let button;
+  for (let i = 0; i < ticksEditors.length; i++) {
+    button = createButton(ticksEditors[i]);
+    button.parent(menuDiv);
+
+    button.style('color', Colors.ticks);
+    button.style('font-family', Dimensions.nameFont);
+    button.style('font-weight', 'bold');
+    button.style('background-color', Colors.states);
+
+    button.mouseReleased(function () {
+      diagrams.setTicks(diagrams.ticks + parseInt(ticksEditors[i]));
+    });
+  }
+}
+

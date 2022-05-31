@@ -19,6 +19,11 @@ class Diagram{
   updateTicks(diagrams){
     this.ticks = diagrams.ticks;
     this.stepSize = diagrams.stepSize;
+
+    this.calculateDimensions();
+    for (let highState of this.highStates){
+      highState.calculatePoints(this);
+    }
   }
 
   calculateDimensions(){

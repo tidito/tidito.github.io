@@ -3,7 +3,7 @@ class Diagrams{
     this.name = 'Name';
     this.diagrams = [];
 
-    this.ticks = 25;
+    this.ticks = 60;
     this.stepSize = floor(Dimensions.diagramMaxWidth / this.ticks);
   }
 
@@ -19,13 +19,15 @@ class Diagrams{
     }
   }
 
-  updateTicks(ticks){
+  setTicks(ticks){
+    console.log('Setting ticks to: ' + ticks);
     this.ticks = ticks;
     this.stepSize = floor(Dimensions.diagramMaxWidth / this.ticks);
 
-    for (let diagram of this.diagrams){
-      diagram.updateTicks(this);
+    for (let i = 0; i < this.diagrams.length; i++){
+      this.diagrams[i].updateTicks(this);
     }
+    redraw();
   }
 
   addDiagram(number) {
