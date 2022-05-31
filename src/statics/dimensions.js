@@ -5,7 +5,7 @@ class Dimensions{
   static menuY = Dimensions.margin;
   static menuWidth = 200;
 
-  static diagramsTopLeft = new Point(Dimensions.menuWidth + Dimensions.margin, 10);
+  static diagramsTopLeft = new Point(Dimensions.menuWidth + 2*Dimensions.margin, Dimensions.margin);
   static diagramHeight = 60;
   static diagramMaxWidth = 1000;
   static nameWidth = 150;

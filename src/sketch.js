@@ -234,9 +234,41 @@ function drawMenu(){
   menuDiv.style('color', Colors.ticks);
   menuDiv.style('font-family', Dimensions.nameFont);
   menuDiv.style('font-weight', 'bold');
+  menuDiv.style('background-color', Colors.container)
 
   drawMenuTicks(menuDiv);
   drawMenuClearAll(menuDiv);
+}
+
+function drawMenuTicks(menuDiv) {
+  let ticksDiv = createDiv();
+  ticksDiv.parent(menuDiv);
+  ticksDiv.position(Dimensions.margin, Dimensions.margin);
+
+  let ticksParagraph = createP('Ticks:');
+  ticksParagraph.parent(ticksDiv);
+  ticksParagraph.style('margin-top', 0);
+
+  ticksEditors = ['-5', '-1', '+1', '+5'];
+  let button;
+  
+  for (let i = 0; i < ticksEditors.length; i++) {
+    button = createButton(ticksEditors[i]);
+    button.parent(ticksDiv);
+
+    button.style('color', Colors.ticks);
+    button.style('font-family', Dimensions.nameFont);
+    button.style('font-weight', 'bold');
+    button.style('background-color', Colors.states);
+    button.style('border-color', '#ffffff00');
+    button.style('margin-right', Dimensions.margin*0.5);
+    button.size(4*Dimensions.margin,3*Dimensions.margin);
+
+
+    button.mouseReleased(function () {
+      diagrams.setTicks(diagrams.ticks + parseInt(ticksEditors[i]));
+    });
+  }
 }
 
 function drawMenuClearAll(menuDiv) {
@@ -247,32 +279,12 @@ function drawMenuClearAll(menuDiv) {
   button.style('font-family', Dimensions.nameFont);
   button.style('font-weight', 'bold');
   button.style('background-color', Colors.states);
+  button.style('border-color', '#ffffff00');
 
   button.style('position', 'absolute');
-  button.style('bottom', 0);
-  button.style('left', 0);
+  button.style('bottom', Dimensions.margin);
+  button.style('left', Dimensions.margin);
 
   button.mouseReleased(clearDiagrams);
-}
-
-function drawMenuTicks(menuDiv) {
-  let ticksParagraph = createP('Ticks:');
-  ticksParagraph.parent(menuDiv);
-
-  ticksEditors = ['-5', '-1', '+1', '+5'];
-  let button;
-  for (let i = 0; i < ticksEditors.length; i++) {
-    button = createButton(ticksEditors[i]);
-    button.parent(menuDiv);
-
-    button.style('color', Colors.ticks);
-    button.style('font-family', Dimensions.nameFont);
-    button.style('font-weight', 'bold');
-    button.style('background-color', Colors.states);
-
-    button.mouseReleased(function () {
-      diagrams.setTicks(diagrams.ticks + parseInt(ticksEditors[i]));
-    });
-  }
 }
 
