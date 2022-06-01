@@ -4,11 +4,12 @@ class Diagrams{
     this.diagrams = [];
 
     this.ticks = 60;
-    this.stepSize = floor(Dimensions.diagramMaxWidth / this.ticks);
+    this.stepSize = (Dimensions.diagramMaxWidth / this.ticks);
   }
 
   rebuild(restoredDiagrams){
     this.name = restoredDiagrams.name;
+    this.ticks = restoredDiagrams.ticks;
     this.stepSize = restoredDiagrams.stepSize;
     
     for (let restoredDiagram of restoredDiagrams.diagrams){
@@ -21,7 +22,7 @@ class Diagrams{
 
   setTicks(ticks){
     this.ticks = ticks;
-    this.stepSize = floor(Dimensions.diagramMaxWidth / this.ticks);
+    this.stepSize = (Dimensions.diagramMaxWidth / this.ticks);
 
     for (let i = 0; i < this.diagrams.length; i++){
       this.diagrams[i].updateTicks(this);
