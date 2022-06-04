@@ -12,6 +12,7 @@ function setup() {
       windowWidth, 
       windowHeight);
   canvas.position(0,0);
+  canvas.drop(importDiagrams);
 
   diagrams = new Diagrams();
   let restoredDiagrams = getItem(Names.storedDiagrams);
@@ -259,10 +260,13 @@ function drawMenu(){
   menuDiv.style('font-family', Dimensions.nameFont);
   menuDiv.style('font-weight', 'bold');
   menuDiv.style('background-color', Colors.container)
+  
+  menuDiv.drop(importDiagrams);
 
   drawMenuTicks(menuDiv);
   drawMenuAddDiagram(menuDiv);
   drawMenuClearAll(menuDiv);
+  drawMenuImportExport(menuDiv);
 }
 
 function drawMenuTicks(menuDiv) {
@@ -311,6 +315,46 @@ function drawMenuAddDiagram(menuDiv) {
   });
 }
 
+function drawMenuImportExport(menuDiv){
+  let importExportDiv = createDiv();
+  importExportDiv.parent(menuDiv);
+  importExportDiv.style('margin', Dimensions.margin);
+
+  let fileInput = createFileInput(importDiagrams);
+  fileInput.parent(importExportDiv);
+  fileInput.style('display', 'none');
+
+  let inputId = 'inputId';
+  fileInput.id(inputId);
+
+  let importButton = createButton('Import');
+  importButton.parent(importExportDiv);
+
+  importButton.style('color', Colors.ticks);
+  importButton.style('font-family', Dimensions.nameFont);
+  importButton.style('font-weight', 'bold');
+  importButton.style('background-color', Colors.states);
+  importButton.style('border-color', '#ffffff00');
+  importButton.style('margin-right', Dimensions.margin*0.5);
+
+  importButton.mouseReleased(function() {
+    fileElem = document.getElementById(inputId);
+    fileElem.click();
+  });
+
+  let exportButton = createButton('Export');
+  exportButton.parent(importExportDiv);
+
+  exportButton.style('color', Colors.ticks);
+  exportButton.style('font-family', Dimensions.nameFont);
+  exportButton.style('font-weight', 'bold');
+  exportButton.style('background-color', Colors.states);
+  exportButton.style('border-color', '#ffffff00');
+  exportButton.style('margin-right', Dimensions.margin*0.5);
+
+  exportButton.mouseReleased(exportDiagrams);
+}
+
 function drawMenuClearAll(menuDiv) {
   let button = createButton('Clear all');
   button.parent(menuDiv);
@@ -328,3 +372,27 @@ function drawMenuClearAll(menuDiv) {
   button.mouseReleased(clearDiagrams);
 }
 
+function exportDiagrams(){
+  if (diagrams){
+    saveJSON(diagrams, 'TiDiTo_' + diagrams.name);
+  }
+}
+
+function importDiagrams(file){
+  if (file.subtype == 'json'){
+    let restoredDiagrams = file.data;
+  
+    if (!restoredDiagrams){
+      addDiagrams();
+    } else {
+      try {
+        diagrams.rebuild(restoredDiagrams);
+      } catch {
+        console.log('Failed to rebuild diagrams');
+        diagrams = new Diagrams();
+        addDiagrams();
+      }
+    }
+    redraw();
+  } 
+}
