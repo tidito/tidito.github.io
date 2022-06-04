@@ -155,10 +155,23 @@ function keyReleased(){
       if (!selectedHighState) break;
       selectedHighState.changeLengthBy(1, selectedDiagram);
     break;
+    case 'W':
+      if (!selectedHighState) break;
+      selectedHighState.changeLengthBy(5, selectedDiagram);
+    break;
+
     case 's':
       if (!selectedHighState) break;
       if (selectedHighState.length_steps > 1){
         selectedHighState.changeLengthBy(-1, selectedDiagram);
+      } else {
+        removeSelectedHighState();
+      }
+    break;
+    case 'S':
+      if (!selectedHighState) break;
+      if (selectedHighState.length_steps > 5){
+        selectedHighState.changeLengthBy(-5, selectedDiagram);
       } else {
         removeSelectedHighState();
       }
@@ -168,9 +181,18 @@ function keyReleased(){
       if (!selectedHighState) break;
       selectedHighState.moveBy(-1, selectedDiagram);
     break;
+    case 'A':
+      if (!selectedHighState) break;
+      selectedHighState.moveBy(-5, selectedDiagram);
+    break;
+
     case 'd':
       if (!selectedHighState) break;
       selectedHighState.moveBy(1, selectedDiagram);
+    break;
+    case 'D':
+      if (!selectedHighState) break;
+      selectedHighState.moveBy(5, selectedDiagram);
     break;
 
     case 'x':
