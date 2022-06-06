@@ -35,7 +35,6 @@ class Diagrams{
   }
 
   addDiagram(number) {
-    console.log(this);
     this.diagrams.push(new Diagram(number, this));
     redraw();
   }

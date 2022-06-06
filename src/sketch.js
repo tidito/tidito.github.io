@@ -252,12 +252,12 @@ function displaySingleDiagramNameInput(diagram){
   nameInput.value(diagram.name);
 }
 
-function displayDiagramsNameInput(nameDiv){
+function displayDiagramsNameInput(menuDiv){
   let nameInput = createInput();
-  nameInput.size(nameDiv.width - 2*Dimensions.nameWidth, Dimensions.nameInputHeight);
+  nameInput.size(menuDiv.width - 2*Dimensions.nameWidth, Dimensions.nameInputHeight);
   nameInput.position(
-    nameDiv.x + Dimensions.margin, 
-    nameDiv.y + Dimensions.margin,
+    menuDiv.x + Dimensions.margin, 
+    menuDiv.y + Dimensions.margin + 90,
     'absolute');
     nameInput.value(diagrams.name);
 
@@ -283,6 +283,7 @@ function drawMenu(){
   
   menuDiv.drop(importDiagrams);
 
+  drawMenuLogo(menuDiv);
   drawMenuName(menuDiv);
   drawMenuTicks(menuDiv);
   drawMenuAddDiagram(menuDiv);
@@ -290,11 +291,22 @@ function drawMenu(){
   drawMenuImportExport(menuDiv);
 }
 
+function drawMenuLogo(menuDiv){
+  let logoDiv = createDiv();
+  logoDiv.parent(menuDiv);
+  logoDiv.id('logoDiv');
+  let image = document.createElement('img');
+  image.src = 'tidito_header.svg'
+  
+  document.getElementById(logoDiv.id()).appendChild(image);
+
+}
 function drawMenuName(menuDiv) {
   let nameDiv = createDiv();
   nameDiv.parent(menuDiv);
   nameDiv.style('margin', Dimensions.margin);
-  nameDiv.style('border-bottom', 'white');
+  nameDiv.style('border', 'white');
+  nameDiv.style('border-top-style', 'solid');
   nameDiv.style('border-bottom-style', 'solid');
   nameDiv.style('border-width', 1);
 
