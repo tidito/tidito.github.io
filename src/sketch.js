@@ -70,7 +70,7 @@ function draw() {
 }
 
 function mousePressed() {
-  if (action == Actions.setName){
+  if (action == Actions.setSingleDiagramName){
     if (selectedDiagram.mouseInNameArea()){
       return;
     } else {
@@ -100,9 +100,9 @@ function mousePressed() {
       break;
     } else if (diagram.mouseInNameArea()) {
       if (action == Actions.none){
-        action = Actions.setName;
+        action = Actions.setSingleDiagramName;
         selectedDiagram = diagram;
-        displayNameInput(diagram);
+        displaySingleDiagramNameInput(diagram);
       }
       break;
     }
@@ -142,7 +142,7 @@ function mouseReleased() {
       }
     action = Actions.none;
     break;
-    case Actions.setName:
+    case Actions.setSingleDiagramName:
       nameInput.elt.focus();
       nameInput.elt.select();
     break;
@@ -204,14 +204,14 @@ function keyReleased(){
 
   switch (keyCode){
     case ENTER:
-      if (selectedDiagram && action == Actions.setName){
+      if (selectedDiagram && action == Actions.setSingleDiagramName){
         selectedDiagram.setName(nameInput.value());
 
         action = Actions.none;
         selectedHighState = null;
         selectedDiagram = null;
         redraw();
-      }
+      } 
       break;
       case ESCAPE:
         action = Actions.none;
@@ -242,7 +242,7 @@ function clearDiagrams(){
   redraw();
 }
 
-function displayNameInput(diagram){
+function displaySingleDiagramNameInput(diagram){
   nameInput = createInput();
   nameInput.size(Dimensions.nameWidth, Dimensions.nameInputHeight);
   nameInput.position(
@@ -250,6 +250,26 @@ function displayNameInput(diagram){
     0.5 * (diagram.nameArea.p1.y + diagram.nameArea.p2.y -Dimensions.nameInputHeight),
     'absolute');
   nameInput.value(diagram.name);
+}
+
+function displayDiagramsNameInput(nameDiv){
+  let nameInput = createInput();
+  nameInput.size(nameDiv.width - 2*Dimensions.nameWidth, Dimensions.nameInputHeight);
+  nameInput.position(
+    nameDiv.x + Dimensions.margin, 
+    nameDiv.y + Dimensions.margin,
+    'absolute');
+    nameInput.value(diagrams.name);
+
+    nameInput.changed(
+    function() {
+      diagrams.setName(nameInput.value());
+      redraw();
+    }
+  );
+
+  nameInput.elt.select();
+  nameInput.elt.focus();
 }
 
 function drawMenu(){
@@ -263,10 +283,30 @@ function drawMenu(){
   
   menuDiv.drop(importDiagrams);
 
+  drawMenuName(menuDiv);
   drawMenuTicks(menuDiv);
   drawMenuAddDiagram(menuDiv);
   drawMenuClearAll(menuDiv);
   drawMenuImportExport(menuDiv);
+}
+
+function drawMenuName(menuDiv) {
+  let nameDiv = createDiv();
+  nameDiv.parent(menuDiv);
+  nameDiv.style('margin', Dimensions.margin);
+  nameDiv.style('border-bottom', 'white');
+  nameDiv.style('border-bottom-style', 'solid');
+  nameDiv.style('border-width', 1);
+
+  let nameParagraph = createP(diagrams.name);
+  nameParagraph.parent(nameDiv);
+
+  nameDiv.mouseReleased(
+    function() {
+      displayDiagramsNameInput(menuDiv);
+      action = Actions.setDiagramsName;
+    }
+  )
 }
 
 function drawMenuTicks(menuDiv) {

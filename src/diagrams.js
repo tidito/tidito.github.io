@@ -1,6 +1,6 @@
 class Diagrams{
   constructor() {
-    this.name = 'Name';
+    this.name = 'Insert name here';
     this.diagrams = [];
 
     this.ticks = 60;
@@ -28,6 +28,10 @@ class Diagrams{
       this.diagrams[i].updateTicks(this);
     }
     redraw();
+  }
+
+  setName(name){
+    this.name = name;
   }
 
   addDiagram(number) {
