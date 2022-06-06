@@ -11,6 +11,7 @@ class Diagrams{
     this.name = restoredDiagrams.name;
     this.ticks = restoredDiagrams.ticks;
     this.stepSize = restoredDiagrams.stepSize;
+    this.diagrams = [];
     
     for (let restoredDiagram of restoredDiagrams.diagrams){
       let diagram = new Diagram(0, this)
