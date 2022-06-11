@@ -61,33 +61,25 @@ class Project{
       
       let buttonSideLength_px = (
         (this.diagrams[i].area.p2.y - this.diagrams[i].area.p1.y
-          - 2 * Dimensions.margin)
-        / 3.0);
+          - 3 * Dimensions.margin)
+        / 2.0);
 
-      this.addRemoveButton(i, buttonSideLength_px);
+      let areaTopLeft = new Point(
+        this.diagrams[i].area.p2.x + Dimensions.margin,
+        this.diagrams[i].area.p1.y
+        );
+
+      let area = Rectangle.fromPointWidthHeight(
+        areaTopLeft,
+        2*buttonSideLength_px + 3*Dimensions.margin,
+        2*buttonSideLength_px + 3*Dimensions.margin
+      );
+
+      area.drawMe();
+
       this.addMoveUpButton(i, buttonSideLength_px);
       this.addMoveDownButton(i, buttonSideLength_px);
-    }
-  }
-
-  addMoveDownButton(i, buttonSideLength_px) {
-    if (i < this.diagrams.length - 1) {
-      let moveDownButton = createImg('resources/move_down.svg', '');
-      Styles.setButtonStyle(moveDownButton);
-      moveDownButton.size(buttonSideLength_px, buttonSideLength_px);
-      moveDownButton.position(
-        this.diagrams[i].area.p2.x + Dimensions.margin,
-        this.diagrams[i].area.p1.y + 2 * (buttonSideLength_px + Dimensions.margin)
-      );
-
-      moveDownButton.style('padding', 0);
-      let project = this;
-      moveDownButton.mouseReleased(
-        function () {
-          project.swapDiagrams(i, i + 1, project);
-          redraw();
-        }
-      );
+      this.addRemoveButton(i, buttonSideLength_px);
     }
   }
 
@@ -97,8 +89,8 @@ class Project{
       Styles.setButtonStyle(moveUpButton);
       moveUpButton.size(buttonSideLength_px, buttonSideLength_px);
       moveUpButton.position(
-        this.diagrams[i].area.p2.x + Dimensions.margin,
-        this.diagrams[i].area.p1.y
+        this.diagrams[i].area.p2.x + 2*Dimensions.margin,
+        this.diagrams[i].area.p1.y + Dimensions.margin
       );
 
       moveUpButton.style('padding', 0);
@@ -112,13 +104,34 @@ class Project{
     }
   }
 
+  addMoveDownButton(i, buttonSideLength_px) {
+    if (i < this.diagrams.length - 1) {
+      let moveDownButton = createImg('resources/move_down.svg', '');
+      Styles.setButtonStyle(moveDownButton);
+      moveDownButton.size(buttonSideLength_px, buttonSideLength_px);
+      moveDownButton.position(
+        this.diagrams[i].area.p2.x + 2*Dimensions.margin,
+        this.diagrams[i].area.p1.y + 2*Dimensions.margin + buttonSideLength_px
+      );
+
+      moveDownButton.style('padding', 0);
+      let project = this;
+      moveDownButton.mouseReleased(
+        function () {
+          project.swapDiagrams(i, i + 1, project);
+          redraw();
+        }
+      );
+    }
+  }
+
   addRemoveButton(i, sideLength_px) {
     let removeButton = createImg('resources/remove.svg', '');
     Styles.setButtonStyle(removeButton);
     removeButton.size(sideLength_px, sideLength_px);
     removeButton.position(
-      this.diagrams[i].area.p2.x + Dimensions.margin,
-      this.diagrams[i].area.p1.y + (sideLength_px + Dimensions.margin)
+      this.diagrams[i].area.p2.x + 3*Dimensions.margin + sideLength_px,
+      this.diagrams[i].area.p1.y + Dimensions.margin + 0.5*(sideLength_px+Dimensions.margin)
     );
 
     removeButton.style('padding', 0);
