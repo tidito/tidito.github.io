@@ -65,48 +65,55 @@ class Project{
         / 3.0);
 
       this.addRemoveButton(i, buttonSideLength_px);
+      this.addMoveUpButton(i, buttonSideLength_px);
+      this.addMoveDownButton(i, buttonSideLength_px);
+    }
+  }
 
-      if (i > 0){
-        let moveUpButton = createButton('^');
-        Styles.setButtonStyle(moveUpButton);
-        moveUpButton.size(buttonSideLength_px, buttonSideLength_px);
-        moveUpButton.position(
-          this.diagrams[i].area.p2.x + Dimensions.margin,
-          this.diagrams[i].area.p1.y
-        );
-        
-        moveUpButton.style('padding', 0);
-        let project = this;
-        moveUpButton.mouseReleased(
-          function () {
-            project.swapDiagrams(i-1, i, project);
-            redraw();
-          }
-        );
-      }
-      if (i < this.diagrams.length-1){
-        let moveDownButton = createButton('v');
-        Styles.setButtonStyle(moveDownButton);
-        moveDownButton.size(buttonSideLength_px, buttonSideLength_px);
-        moveDownButton.position(
-          this.diagrams[i].area.p2.x + Dimensions.margin,
-          this.diagrams[i].area.p1.y + 2*(buttonSideLength_px + Dimensions.margin)
-        );
-        
-        moveDownButton.style('padding', 0);
-        let project = this;
-        moveDownButton.mouseReleased(
-          function () {
-            project.swapDiagrams(i, i+1, project);
-            redraw();
-          }
-        );
-      }
+  addMoveDownButton(i, buttonSideLength_px) {
+    if (i < this.diagrams.length - 1) {
+      let moveDownButton = createImg('resources/move_down.svg', '');
+      Styles.setButtonStyle(moveDownButton);
+      moveDownButton.size(buttonSideLength_px, buttonSideLength_px);
+      moveDownButton.position(
+        this.diagrams[i].area.p2.x + Dimensions.margin,
+        this.diagrams[i].area.p1.y + 2 * (buttonSideLength_px + Dimensions.margin)
+      );
+
+      moveDownButton.style('padding', 0);
+      let project = this;
+      moveDownButton.mouseReleased(
+        function () {
+          project.swapDiagrams(i, i + 1, project);
+          redraw();
+        }
+      );
+    }
+  }
+
+  addMoveUpButton(i, buttonSideLength_px) {
+    if (i > 0) {
+      let moveUpButton = createImg('resources/move_up.svg', '');
+      Styles.setButtonStyle(moveUpButton);
+      moveUpButton.size(buttonSideLength_px, buttonSideLength_px);
+      moveUpButton.position(
+        this.diagrams[i].area.p2.x + Dimensions.margin,
+        this.diagrams[i].area.p1.y
+      );
+
+      moveUpButton.style('padding', 0);
+      let project = this;
+      moveUpButton.mouseReleased(
+        function () {
+          project.swapDiagrams(i - 1, i, project);
+          redraw();
+        }
+      );
     }
   }
 
   addRemoveButton(i, sideLength_px) {
-    let removeButton = createButton('X');
+    let removeButton = createImg('resources/remove.svg', '');
     Styles.setButtonStyle(removeButton);
     removeButton.size(sideLength_px, sideLength_px);
     removeButton.position(

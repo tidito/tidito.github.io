@@ -296,7 +296,7 @@ function drawMenuLogo(menuDiv){
   logoDiv.parent(menuDiv);
   logoDiv.id('logoDiv');
   let image = document.createElement('img');
-  image.src = 'tidito_header.svg'
+  image.src = 'resources/tidito_header.svg'
   
   document.getElementById(logoDiv.id()).appendChild(image);
 
