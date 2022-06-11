@@ -1,4 +1,4 @@
-class Diagrams{
+class Project{
   constructor() {
     this.name = 'Insert name here';
     this.diagrams = [];
@@ -7,13 +7,13 @@ class Diagrams{
     this.stepSize = (Dimensions.diagramMaxWidth / this.ticks);
   }
 
-  rebuild(restoredDiagrams){
-    this.name = restoredDiagrams.name;
-    this.ticks = restoredDiagrams.ticks;
-    this.stepSize = restoredDiagrams.stepSize;
+  rebuild(restoredProject){
+    this.name = restoredProject.name;
+    this.ticks = restoredProject.ticks;
+    this.stepSize = restoredProject.stepSize;
     this.diagrams = [];
     
-    for (let restoredDiagram of restoredDiagrams.diagrams){
+    for (let restoredDiagram of restoredProject.diagrams){
       let diagram = new Diagram(0, this)
       diagram.rebuild(restoredDiagram);
 
@@ -51,6 +51,6 @@ class Diagrams{
   }
 
   storeData() {
-    storeItem(Names.storedDiagrams, this);
+    storeItem(Names.storedProject, this);
   }
 }

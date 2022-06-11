@@ -1,12 +1,12 @@
 class Diagram{
-  constructor(number, diagrams){
+  constructor(number, project){
     this.name = 'Name';
     this.highStates = [];
     this.number = number;
     
     this.ticks;
     this.stepSize;
-    this.updateTicks(diagrams);
+    this.updateTicks(project);
 
     this.topLeft;
     this.area;
@@ -16,9 +16,9 @@ class Diagram{
     this.calculateDimensions();
   }
 
-  updateTicks(diagrams){
-    this.ticks = diagrams.ticks;
-    this.stepSize = diagrams.stepSize;
+  updateTicks(project){
+    this.ticks = project.ticks;
+    this.stepSize = project.stepSize;
 
     this.calculateDimensions();
     for (let highState of this.highStates){

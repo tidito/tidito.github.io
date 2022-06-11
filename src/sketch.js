@@ -1,7 +1,7 @@
 let mousePressedAt;
 let mouseReleasedAt;
 let action = Actions.none;
-let diagrams;
+let project;
 let selectedDiagram;
 let selectedHighState;
 let nameInput;
@@ -12,18 +12,18 @@ function setup() {
       windowWidth, 
       windowHeight);
   canvas.position(0,0);
-  canvas.drop(importDiagrams);
+  canvas.drop(importProject);
 
-  diagrams = new Diagrams();
-  let restoredDiagrams = getItem(Names.storedDiagrams);
+  project = new Project();
+  let restoredProject = getItem(Names.storedProject);
 
-  if (!restoredDiagrams){
+  if (!restoredProject){
     addDiagrams();
   } else {
     try {
-      diagrams.rebuild(restoredDiagrams);
+      project.rebuild(restoredProject);
     } catch {
-      diagrams = new Diagrams();
+      project = new Project();
       addDiagrams();
     }
   }
@@ -33,14 +33,14 @@ function setup() {
 
 function addDiagrams() {
   for (i = 0; i < 3; i++){
-    diagrams.addDiagram(i);
+    project.addDiagram(i);
   }
 }
 
 function draw() {
   clear();
   removeElements();
-  diagrams.drawMe();
+  project.drawMe();
   drawMenu();
 
   let rectangle;
@@ -70,7 +70,7 @@ function draw() {
 }
 
 function mousePressed() {
-  if (action == Actions.setSingleDiagramName){
+  if (action == Actions.setDiagramName){
     if (selectedDiagram.mouseInNameArea()){
       return;
     } else {
@@ -83,7 +83,7 @@ function mousePressed() {
 
   action = Actions.none;
 
-  for (let diagram of diagrams.diagrams){
+  for (let diagram of project.diagrams){
     for (let highState of diagram.highStates){
       if (highState.isMouseOver()){
         selectedHighState = highState;
@@ -100,9 +100,9 @@ function mousePressed() {
       break;
     } else if (diagram.mouseInNameArea()) {
       if (action == Actions.none){
-        action = Actions.setSingleDiagramName;
+        action = Actions.setDiagramName;
         selectedDiagram = diagram;
-        displaySingleDiagramNameInput(diagram);
+        displayDiagramNameInput(diagram);
       }
       break;
     }
@@ -142,12 +142,12 @@ function mouseReleased() {
       }
     action = Actions.none;
     break;
-    case Actions.setSingleDiagramName:
+    case Actions.setDiagramName:
       nameInput.elt.focus();
       nameInput.elt.select();
     break;
   }
-  diagrams.storeData();
+  project.storeData();
 }
 
 function keyReleased(){
@@ -204,7 +204,7 @@ function keyReleased(){
 
   switch (keyCode){
     case ENTER:
-      if (selectedDiagram && action == Actions.setSingleDiagramName){
+      if (selectedDiagram && action == Actions.setDiagramName){
         selectedDiagram.setName(nameInput.value());
 
         action = Actions.none;
@@ -220,7 +220,7 @@ function keyReleased(){
         redraw();
       break;
     }
-  diagrams.storeData();
+  project.storeData();
 }
 
 function windowResized(){
@@ -235,14 +235,14 @@ function removeSelectedHighState() {
   }
 }
 
-function clearDiagrams(){
-  diagrams = new Diagrams();
+function clearProject(){
+  project = new Project();
   addDiagrams();
   clearStorage();
   redraw();
 }
 
-function displaySingleDiagramNameInput(diagram){
+function displayDiagramNameInput(diagram){
   nameInput = createInput();
   nameInput.size(Dimensions.nameWidth, Dimensions.nameInputHeight);
   nameInput.position(
@@ -252,18 +252,18 @@ function displaySingleDiagramNameInput(diagram){
   nameInput.value(diagram.name);
 }
 
-function displayDiagramsNameInput(menuDiv){
+function displayProjectNameInput(menuDiv){
   let nameInput = createInput();
   nameInput.size(menuDiv.width - 2*Dimensions.nameWidth, Dimensions.nameInputHeight);
   nameInput.position(
     menuDiv.x + Dimensions.margin, 
     menuDiv.y + Dimensions.margin + 90,
     'absolute');
-    nameInput.value(diagrams.name);
+    nameInput.value(project.name);
 
     nameInput.changed(
     function() {
-      diagrams.setName(nameInput.value());
+      project.setName(nameInput.value());
       redraw();
     }
   );
@@ -281,7 +281,7 @@ function drawMenu(){
   menuDiv.style('font-weight', 'bold');
   menuDiv.style('background-color', Colors.container)
   
-  menuDiv.drop(importDiagrams);
+  menuDiv.drop(importProject);
 
   drawMenuLogo(menuDiv);
   drawMenuName(menuDiv);
@@ -310,13 +310,13 @@ function drawMenuName(menuDiv) {
   nameDiv.style('border-bottom-style', 'solid');
   nameDiv.style('border-width', 1);
 
-  let nameParagraph = createP(diagrams.name);
+  let nameParagraph = createP(project.name);
   nameParagraph.parent(nameDiv);
 
   nameDiv.mouseReleased(
     function() {
-      displayDiagramsNameInput(menuDiv);
-      action = Actions.setDiagramsName;
+      displayProjectNameInput(menuDiv);
+      action = Actions.setProjectName;
     }
   )
 }
@@ -346,7 +346,7 @@ function drawMenuTicks(menuDiv) {
 
 
     button.mouseReleased(function () {
-      diagrams.setTicks(diagrams.ticks + parseInt(ticksEditors[i]));
+      project.setTicks(project.ticks + parseInt(ticksEditors[i]));
     });
   }
 }
@@ -363,7 +363,7 @@ function drawMenuAddDiagram(menuDiv) {
   button.style('margin', Dimensions.margin);
 
   button.mouseReleased(function () {
-    diagrams.addDiagram(diagrams.diagrams.length);
+    project.addDiagram(project.diagrams.length);
   });
 }
 
@@ -372,7 +372,7 @@ function drawMenuImportExport(menuDiv){
   importExportDiv.parent(menuDiv);
   importExportDiv.style('margin', Dimensions.margin);
 
-  let fileInput = createFileInput(importDiagrams);
+  let fileInput = createFileInput(importProject);
   fileInput.parent(importExportDiv);
   fileInput.style('display', 'none');
 
@@ -404,7 +404,7 @@ function drawMenuImportExport(menuDiv){
   exportButton.style('border-color', '#ffffff00');
   exportButton.style('margin-right', Dimensions.margin*0.5);
 
-  exportButton.mouseReleased(exportDiagrams);
+  exportButton.mouseReleased(exportProject);
 }
 
 function drawMenuClearAll(menuDiv) {
@@ -421,27 +421,27 @@ function drawMenuClearAll(menuDiv) {
   button.style('bottom', Dimensions.margin);
   button.style('left', Dimensions.margin);
 
-  button.mouseReleased(clearDiagrams);
+  button.mouseReleased(clearProject);
 }
 
-function exportDiagrams(){
-  if (diagrams){
-    saveJSON(diagrams, 'TiDiTo_' + diagrams.name);
+function exportProject(){
+  if (project){
+    saveJSON(project, 'TiDiTo_' + project.name);
   }
 }
 
-function importDiagrams(file){
+function importProject(file){
   if (file.subtype == 'json'){
-    let restoredDiagrams = file.data;
+    let restoredProject = file.data;
   
-    if (!restoredDiagrams){
+    if (!restoredProject){
       addDiagrams();
     } else {
       try {
-        diagrams.rebuild(restoredDiagrams);
+        project.rebuild(restoredProject);
       } catch {
-        console.log('Failed to rebuild diagrams');
-        diagrams = new Diagrams();
+        console.log('Failed to rebuild project');
+        project = new Project();
         addDiagrams();
       }
     }
