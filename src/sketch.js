@@ -301,6 +301,7 @@ function drawMenuLogo(menuDiv){
   document.getElementById(logoDiv.id()).appendChild(image);
 
 }
+
 function drawMenuName(menuDiv) {
   let nameDiv = createDiv();
   nameDiv.parent(menuDiv);
@@ -320,6 +321,7 @@ function drawMenuName(menuDiv) {
     }
   )
 }
+
 function drawMenuTicks(menuDiv) {
   let ticksDiv = createDiv();
   ticksDiv.parent(menuDiv);

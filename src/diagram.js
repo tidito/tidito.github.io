@@ -16,6 +16,11 @@ class Diagram{
     this.calculateDimensions();
   }
 
+  setNumber(number, project) {
+    this.number = number;
+    this.updateTicks(project);
+  }
+
   updateTicks(project){
     this.ticks = project.ticks;
     this.stepSize = project.stepSize;
