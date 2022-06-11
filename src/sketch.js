@@ -320,7 +320,6 @@ function drawMenuName(menuDiv) {
     }
   )
 }
-
 function drawMenuTicks(menuDiv) {
   let ticksDiv = createDiv();
   ticksDiv.parent(menuDiv);
@@ -336,11 +335,7 @@ function drawMenuTicks(menuDiv) {
     button = createButton(ticksEditors[i]);
     button.parent(ticksDiv);
 
-    button.style('color', Colors.ticks);
-    button.style('font-family', Dimensions.nameFont);
-    button.style('font-weight', 'bold');
-    button.style('background-color', Colors.states);
-    button.style('border-color', '#ffffff00');
+    Styles.setButtonStyle(button);
     button.style('margin-right', Dimensions.margin*0.5);
     button.size(4*Dimensions.margin, 3*Dimensions.margin);
 
@@ -354,12 +349,7 @@ function drawMenuTicks(menuDiv) {
 function drawMenuAddDiagram(menuDiv) {
   let button = createButton('Add diagram');
   button.parent(menuDiv);
-
-  button.style('color', Colors.ticks);
-  button.style('font-family', Dimensions.nameFont);
-  button.style('font-weight', 'bold');
-  button.style('background-color', Colors.states);
-  button.style('border-color', '#ffffff00');
+  Styles.setButtonStyle(button);
   button.style('margin', Dimensions.margin);
 
   button.mouseReleased(function () {
@@ -381,12 +371,7 @@ function drawMenuImportExport(menuDiv){
 
   let importButton = createButton('Import');
   importButton.parent(importExportDiv);
-
-  importButton.style('color', Colors.ticks);
-  importButton.style('font-family', Dimensions.nameFont);
-  importButton.style('font-weight', 'bold');
-  importButton.style('background-color', Colors.states);
-  importButton.style('border-color', '#ffffff00');
+  Styles.setButtonStyle(importButton);
   importButton.style('margin-right', Dimensions.margin*0.5);
 
   importButton.mouseReleased(function() {
@@ -396,12 +381,7 @@ function drawMenuImportExport(menuDiv){
 
   let exportButton = createButton('Export');
   exportButton.parent(importExportDiv);
-
-  exportButton.style('color', Colors.ticks);
-  exportButton.style('font-family', Dimensions.nameFont);
-  exportButton.style('font-weight', 'bold');
-  exportButton.style('background-color', Colors.states);
-  exportButton.style('border-color', '#ffffff00');
+  Styles.setButtonStyle(exportButton);
   exportButton.style('margin-right', Dimensions.margin*0.5);
 
   exportButton.mouseReleased(exportProject);
@@ -410,12 +390,7 @@ function drawMenuImportExport(menuDiv){
 function drawMenuClearAll(menuDiv) {
   let button = createButton('Clear all');
   button.parent(menuDiv);
-
-  button.style('color', Colors.ticks);
-  button.style('font-family', Dimensions.nameFont);
-  button.style('font-weight', 'bold');
-  button.style('background-color', Colors.states);
-  button.style('border-color', '#ffffff00');
+  Styles.setButtonStyle(button);
 
   button.style('position', 'absolute');
   button.style('bottom', Dimensions.margin);

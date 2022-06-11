@@ -36,3 +36,21 @@ class Dimensions{
     Dimensions.containerHeight
     + Dimensions.margin;
 }
+
+class Colors{
+  static background = '#0f1022'; //(100);
+  static container = '#182036'; //(150);
+  static states = '#228de2'; //(255);
+  static selectedState = '#5042d0';
+  static ticks = '#ffffff'
+}
+
+class Styles{
+  static setButtonStyle(button){
+    button.style('color', Colors.ticks);
+    button.style('font-family', Dimensions.nameFont);
+    button.style('font-weight', 'bold');
+    button.style('background-color', Colors.states);
+    button.style('border-color', '#ffffff00');
+  }
+}
