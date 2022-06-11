@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200"
+   height="80"
+   viewBox="0 0 200 80.000001"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="tidito_header_fonts.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:document-units="px"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="5.12"
+     inkscape:cx="104.19922"
+     inkscape:cy="41.699219"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     inkscape:snap-page="true" />
+  <defs
+     id="defs2">
+    <rect
+       x="159.97905"
+       y="223.97067"
+       width="281.29651"
+       height="69.324257"
+       id="rect12509" />
+    <rect
+       x="178.64328"
+       y="135.98219"
+       width="781.23102"
+       height="234.63596"
+       id="rect2363" />
+    <rect
+       x="178.64328"
+       y="135.98219"
+       width="781.23102"
+       height="234.63596"
+       id="rect49477" />
+    <rect
+       x="178.64328"
+       y="135.98219"
+       width="781.23102"
+       height="234.63596"
+       id="rect49483" />
+    <rect
+       x="178.64328"
+       y="135.98219"
+       width="781.23102"
+       height="234.63596"
+       id="rect49489" />
+    <rect
+       x="178.64328"
+       y="135.98219"
+       width="781.23102"
+       height="234.63596"
+       id="rect54973" />
+    <rect
+       x="178.64328"
+       y="135.98219"
+       width="781.23102"
+       height="234.63596"
+       id="rect54979" />
+    <rect
+       x="178.64328"
+       y="135.98219"
+       width="781.23102"
+       height="234.63596"
+       id="rect49477-5" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-159.64577,-148.63544)">
+    <text
+       xml:space="preserve"
+       id="text12507"
+       style="font-size:24px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect12509);fill:#ffffff;stroke-width:1.18677"
+       transform="matrix(0.84262251,0,0,0.84262251,34.540926,9.1048122)"><tspan
+         x="159.97852"
+         y="246.2907"
+         id="tspan941">Timing Diagram Tool</tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2361"
+       style="font-size:53.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:8px;word-spacing:0px;white-space:pre;shape-inside:url(#rect2363);fill:#ffffff;stroke-width:1.32356"
+       transform="matrix(0.75554108,0,0,0.75554108,77.819283,47.775591)"><tspan
+         x="178.64258"
+         y="185.58239"
+         id="tspan945"><tspan
+           style="font-weight:900;-inkscape-font-specification:'Lato Heavy'"
+           id="tspan943">T</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text49475"
+       style="font-size:53.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:8px;word-spacing:0px;white-space:pre;shape-inside:url(#rect49477);fill:#ffffff;stroke-width:1.32356"
+       transform="matrix(0.75554108,0,0,0.75554108,102.66369,47.775591)"><tspan
+         x="178.64258"
+         y="185.58239"
+         id="tspan949"><tspan
+           style="font-weight:900;-inkscape-font-specification:'Lato Heavy'"
+           id="tspan947">I</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text49481"
+       style="font-size:53.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:8px;word-spacing:0px;white-space:pre;shape-inside:url(#rect49483);fill:#ffffff;stroke-width:1.32356"
+       transform="matrix(0.75554108,0,0,0.75554108,113.26363,47.775591)"><tspan
+         x="178.64258"
+         y="185.58239"
+         id="tspan953"><tspan
+           style="font-weight:900;-inkscape-font-specification:'Lato Heavy'"
+           id="tspan951">D</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text49487"
+       style="font-size:53.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:8px;word-spacing:0px;white-space:pre;shape-inside:url(#rect49489);fill:#ffffff;stroke-width:1.32356"
+       transform="matrix(0.75554108,0,0,0.75554108,183.02183,48.097955)"><tspan
+         x="178.64258"
+         y="185.58239"
+         id="tspan957"><tspan
+           style="font-weight:900;-inkscape-font-specification:'Lato Heavy'"
+           id="tspan955">O</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text54971"
+       style="font-size:53.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:8px;word-spacing:0px;white-space:pre;shape-inside:url(#rect54973);fill:#ffffff;stroke-width:1.32356"
+       transform="matrix(0.75554108,0,0,0.75554108,143.64867,47.775591)"><tspan
+         x="178.64258"
+         y="185.58239"
+         id="tspan961"><tspan
+           style="font-weight:900;-inkscape-font-specification:'Lato Heavy'"
+           id="tspan959">I</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text54977"
+       style="font-size:53.3333px;line-height:1.25;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:8px;word-spacing:0px;white-space:pre;shape-inside:url(#rect54979);fill:#ffffff;stroke-width:1.32356"
+       transform="matrix(0.75554108,0,0,0.75554108,156.48501,47.775591)"><tspan
+         x="178.64258"
+         y="185.58239"
+         id="tspan965"><tspan
+           style="font-weight:900;-inkscape-font-specification:'Lato Heavy'"
+           id="tspan963">T</tspan></tspan></text>
+    <g
+       id="g2663"
+       transform="translate(0.00293,-0.32237)">
+      <path
+         style="color:#000000;fill:#ffffff;stroke-width:1;-inkscape-stroke:none"
+         d="m 173.17333,158.95781 v 6.74047 l -3.51879,-0.008 -0.0117,4.94843 8.4789,0.02 v -6.75213 h 7.04919 v 6.74634 h 14.47191 v -4.94844 h -9.52349 v -6.74634 z"
+         id="path854" />
+      <path
+         style="color:#000000;fill:#ffffff;stroke-width:1;-inkscape-stroke:none"
+         d="m 180.53552,176.61832 -5.99882,6.74633 h -4.88804 v 4.94843 h 7.10966 l 5.99889,-6.74634 h 3.77712 l 5.99881,6.74634 h 7.10974 v -4.94843 h -4.88805 l -5.99881,-6.74633 z"
+         id="path856" />
+    </g>
+  </g>
+</svg>
