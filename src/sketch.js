@@ -236,10 +236,12 @@ function removeSelectedHighState() {
 }
 
 function clearProject(){
-  project = new Project();
-  addDiagrams();
-  clearStorage();
-  redraw();
+     if (window.confirm("Do you really want to clear all?")){
+	project = new Project();
+  	addDiagrams();
+  	clearStorage();
+  	redraw();
+     }
 }
 
 function displayDiagramNameInput(diagram){
