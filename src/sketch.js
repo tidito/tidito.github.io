@@ -3,7 +3,8 @@ let mouseReleasedAt;
 let action = Actions.none;
 let project;
 let selectedDiagram;
-let selectedHighState;
+let selectedHighStates = [];
+let selectedHighStatesDiagrams = [];
 let nameInput;
 
 function setup() {
@@ -64,9 +65,8 @@ function draw() {
       rectangle.drawMeInColor(Colors.states);
       break;
   }
-  if (selectedHighState){
-    selectedHighState.drawMeInColor(Colors.selectedState);
-  }
+  
+  selectedHighStates.forEach(state => state.drawMeInColor(Colors.selectedState));
 }
 
 function mousePressed() {
@@ -79,17 +79,22 @@ function mousePressed() {
   }
   mousePressedAt = new Point(mouseX, mouseY);
   selectedDiagram = null;
-  selectedHighState = null;
+  if ((keyIsPressed && keyCode === CONTROL) == false) {
+    selectedHighStates = [];
+    selectedHighStatesDiagrams = [];
+  }
 
   action = Actions.none;
 
   for (let diagram of project.diagrams){
     for (let highState of diagram.highStates){
       if (highState.isMouseOver()){
-        selectedHighState = highState;
+        
+        selectedHighStates.push(highState);
+        selectedHighStatesDiagrams.push(diagram);
         action = Actions.selectHighState;
         break;
-      }
+      } 
     }
     if (diagram.mouseInStatesArea()){
       selectedDiagram = diagram;
@@ -135,10 +140,11 @@ function mouseReleased() {
       action = Actions.none;
     break;
     case Actions.selectHighState:
-      if (selectedHighState.isMouseOver()){
+      if (selectedHighStates[selectedHighStates.length-1].isMouseOver()){
         redraw();
       } else {
-        selectedHighState = null;
+        selectedHighStates = [];
+        selectedHighStatesDiagrams = [];
       }
     action = Actions.none;
     break;
@@ -153,52 +159,77 @@ function mouseReleased() {
 function keyReleased(){
   switch (key){
     case 'w':
-      if (!selectedHighState) break;
-      selectedHighState.changeLengthBy(1, selectedDiagram);
+      selectedHighStates.forEach(
+        (state, i) => 
+        state.changeLengthBy(1, selectedHighStatesDiagrams[i]));
     break;
     case 'W':
-      if (!selectedHighState) break;
-      selectedHighState.changeLengthBy(5, selectedDiagram);
+      selectedHighStates.forEach(
+        (state, i) => 
+        state.changeLengthBy(5, selectedHighStatesDiagrams[i]));
     break;
 
     case 's':
-      if (!selectedHighState) break;
-      if (selectedHighState.length_steps > 1){
-        selectedHighState.changeLengthBy(-1, selectedDiagram);
-      } else {
-        removeSelectedHighState();
-      }
+      indexesToRemove = [];
+      selectedHighStates.forEach(
+        (state, i) => {
+          if (state.length_steps > 1){
+            state.changeLengthBy(-1, selectedHighStatesDiagrams[i]);
+          } else {
+            selectedHighStatesDiagrams[i].removeHighState(selectedHighStates[i]);
+            indexesToRemove.push(i);
+          }
+        }
+      );
+      for (let i = indexesToRemove.length-1; i>= 0; i--){
+        selectedHighStates.splice(indexesToRemove[i], 1);
+        selectedHighStatesDiagrams.splice(indexesToRemove[i], 1);
+        redraw();
+      };
     break;
     case 'S':
-      if (!selectedHighState) break;
-      if (selectedHighState.length_steps > 5){
-        selectedHighState.changeLengthBy(-5, selectedDiagram);
-      } else {
-        removeSelectedHighState();
-      }
+      indexesToRemove = [];
+      selectedHighStates.forEach(
+        (state, i) => {
+          if (state.length_steps > 5){
+            state.changeLengthBy(-5, selectedHighStatesDiagrams[i]);
+          } else {
+            selectedHighStatesDiagrams[i].removeHighState(selectedHighStates[i]);
+            indexesToRemove.push(i);
+          }
+        }
+      );
+      for (let i = indexesToRemove.length-1; i>= 0; i--){
+        selectedHighStates.splice(indexesToRemove[i], 1);
+        selectedHighStatesDiagrams.splice(indexesToRemove[i], 1);
+        redraw();
+      };
     break;
 
     case 'a':
-      if (!selectedHighState) break;
-      selectedHighState.moveBy(-1, selectedDiagram);
+      selectedHighStates.forEach(
+        (state, i) => 
+        state.moveBy(-1, selectedHighStatesDiagrams[i]));
     break;
     case 'A':
-      if (!selectedHighState) break;
-      selectedHighState.moveBy(-5, selectedDiagram);
+      selectedHighStates.forEach(
+        (state, i) => 
+        state.moveBy(-5, selectedHighStatesDiagrams[i]));
     break;
 
     case 'd':
-      if (!selectedHighState) break;
-      selectedHighState.moveBy(1, selectedDiagram);
+      selectedHighStates.forEach(
+        (state, i) => 
+        state.moveBy(1, selectedHighStatesDiagrams[i]));
     break;
     case 'D':
-      if (!selectedHighState) break;
-      selectedHighState.moveBy(5, selectedDiagram);
+      selectedHighStates.forEach(
+        (state, i) => 
+        state.moveBy(5, selectedHighStatesDiagrams[i]));
     break;
 
     case 'x':
-      if (!selectedHighState) break;
-      removeSelectedHighState();
+      removeSelectedHighStates();
       break;
     }
 
@@ -208,14 +239,14 @@ function keyReleased(){
         selectedDiagram.setName(nameInput.value());
 
         action = Actions.none;
-        selectedHighState = null;
+        selectedHighStates = null;
         selectedDiagram = null;
         redraw();
       } 
       break;
       case ESCAPE:
         action = Actions.none;
-        selectedHighState = null;
+        selectedHighStates = null;
         selectedDiagram = null;
         redraw();
       break;
@@ -227,21 +258,29 @@ function windowResized(){
   redraw();
 }
 
-function removeSelectedHighState() {
-  if (selectedHighState && selectedDiagram) {
-    selectedDiagram.removeHighState(selectedHighState);
-    selectedHighState = null;
+function removeSelectedHighStates() {
+  highStatesSelectionCorrect = 
+    selectedHighStates.length > 0 
+    && selectedHighStates.length == selectedHighStatesDiagrams.length;
+
+  if (highStatesSelectionCorrect) {
+    for (let i=0; i<selectedHighStates.length; i++){
+      selectedHighStatesDiagrams[i].removeHighState(selectedHighStates[i]);
+    }
+    
+    selectedHighStates = [];
+    selectedHighStatesDiagrams = [];
     redraw();
   }
 }
 
 function clearProject(){
-     if (window.confirm("Do you really want to clear all?")){
-	project = new Project();
+  if (window.confirm("Do you really want to clear all?")){
+	  project = new Project();
   	addDiagrams();
   	clearStorage();
   	redraw();
-     }
+  }
 }
 
 function displayDiagramNameInput(diagram){
