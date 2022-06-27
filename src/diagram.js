@@ -5,7 +5,7 @@ class Diagram{
     this.number = number;
     
     this.ticks;
-    this.stepSize;
+    this.stepSize_px;
     this.updateTicks(project);
 
     this.topLeft;
@@ -23,7 +23,7 @@ class Diagram{
 
   updateTicks(project){
     this.ticks = project.ticks;
-    this.stepSize = project.stepSize;
+    this.stepSize_px = project.stepSize_px;
 
     this.calculateDimensions();
     for (let highState of this.highStates){
@@ -34,34 +34,34 @@ class Diagram{
   calculateDimensions(){
     this.topLeft =
       Dimensions.diagramsTopLeft.offseted(
-        0, this.number * Dimensions.containersSpan);
+        0, this.number * Dimensions.containersSpan_px);
     this.area = 
       Rectangle.fromPointWidthHeight(
-        this.topLeft, Dimensions.containerWidth, Dimensions.containerHeight);
+        this.topLeft, containerWidth_px(), Dimensions.containerHeight_px);
     this.statesArea = 
       new Rectangle(
         this.area.p1.offseted(
-          Dimensions.nameWidth + (2 * Dimensions.margin), 
-          Dimensions.margin),
+          Dimensions.nameWidth_px + (2 * Dimensions.margin_px), 
+          Dimensions.margin_px),
         this.area.p2.offseted(
-          -Dimensions.margin, 
-          -Dimensions.margin)
+          -Dimensions.margin_px, 
+          -Dimensions.margin_px)
       );
     this.nameArea = 
       new Rectangle(
         this.area.p1.offseted(
-          Dimensions.margin, 
-          Dimensions.margin),
+          Dimensions.margin_px, 
+          Dimensions.margin_px),
         this.area.p1.offseted(
-          Dimensions.nameWidth + Dimensions.margin, 
-          Dimensions.containerHeight - Dimensions.margin)
+          Dimensions.nameWidth_px + Dimensions.margin_px, 
+          Dimensions.containerHeight_px - Dimensions.margin_px)
       );
   }
 
   rebuild(restoredDiagram){
     this.name = restoredDiagram.name;
     this.number = restoredDiagram.number;
-    this.stepSize = restoredDiagram.stepSize;
+    this.stepSize_px = restoredDiagram.stepSize_px;
     this.ticks = restoredDiagram.ticks;
     
     this.calculateDimensions();
@@ -121,10 +121,10 @@ class Diagram{
     textAlign(CENTER, CENTER);
 
     for (let i = 0; i<= this.ticks; i++){
-      let x = this.statesArea.p1.x + (i * this.stepSize);
+      let x = this.statesArea.p1.x + (i * this.stepSize_px);
 
       if (i % Dimensions.labeledTickEvery == 0){
-        let y = this.statesArea.p2.y + (Dimensions.margin * 0.5);
+        let y = this.statesArea.p2.y + (Dimensions.margin_px * 0.5);
 
         noStroke();
         text(i, x, y);
@@ -140,10 +140,10 @@ class Diagram{
   }
 
   drawLowStates() {
-    strokeWeight(Dimensions.lowStateLineWidth);
+    strokeWeight(Dimensions.lowStateLineWidth_px);
     stroke(Colors.states);
 
-    let upBy = ceil(Dimensions.lowStateLineWidth * 0.5);
+    let upBy = ceil(Dimensions.lowStateLineWidth_px * 0.5);
 
     line(
       this.statesArea.p1.x,
@@ -178,10 +178,10 @@ class Diagram{
   xPositionPixelsToSteps(position_px){
     position_px = MyMath.limit(position_px, this.statesArea.p1.x, this.statesArea.p2.x);
     let positionRelative_px = position_px - this.statesArea.p1.x;
-    return round(positionRelative_px/this.stepSize);
+    return round(positionRelative_px/this.stepSize_px);
   }
 
   xPositionStepsToPixels(position_steps){
-    return this.statesArea.p1.x + position_steps * this.stepSize;
+    return this.statesArea.p1.x + position_steps * this.stepSize_px;
   }
 }

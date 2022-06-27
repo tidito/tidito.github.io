@@ -4,13 +4,13 @@ class Project{
     this.diagrams = [];
 
     this.ticks = 60;
-    this.stepSize = (Dimensions.diagramMaxWidth / this.ticks);
+    this.stepSize_px = (diagramMaxWidth_px() / this.ticks);
   }
 
   rebuild(restoredProject){
     this.name = restoredProject.name;
     this.ticks = restoredProject.ticks;
-    this.stepSize = restoredProject.stepSize;
+    this.stepSize_px = (diagramMaxWidth_px() / this.ticks);
     this.diagrams = [];
     
     for (let restoredDiagram of restoredProject.diagrams){
@@ -23,7 +23,7 @@ class Project{
 
   setTicks(ticks){
     this.ticks = ticks;
-    this.stepSize = (Dimensions.diagramMaxWidth / this.ticks);
+    this.stepSize_px = (diagramMaxWidth_px() / this.ticks);
 
     for (let i = 0; i < this.diagrams.length; i++){
       this.diagrams[i].updateTicks(this);
@@ -61,18 +61,18 @@ class Project{
       
       let buttonSideLength_px = (
         (this.diagrams[i].area.p2.y - this.diagrams[i].area.p1.y
-          - 3 * Dimensions.margin)
+          - 3 * Dimensions.margin_px)
         / 2.0);
 
       let areaTopLeft = new Point(
-        this.diagrams[i].area.p2.x + Dimensions.margin,
+        this.diagrams[i].area.p2.x + Dimensions.margin_px,
         this.diagrams[i].area.p1.y
         );
 
       let area = Rectangle.fromPointWidthHeight(
         areaTopLeft,
-        2*buttonSideLength_px + 3*Dimensions.margin,
-        2*buttonSideLength_px + 3*Dimensions.margin
+        2*buttonSideLength_px + 3*Dimensions.margin_px,
+        2*buttonSideLength_px + 3*Dimensions.margin_px
       );
 
       area.drawMe();
@@ -89,8 +89,8 @@ class Project{
       Styles.setButtonStyle(moveUpButton);
       moveUpButton.size(buttonSideLength_px, buttonSideLength_px);
       moveUpButton.position(
-        this.diagrams[i].area.p2.x + 2*Dimensions.margin,
-        this.diagrams[i].area.p1.y + Dimensions.margin
+        this.diagrams[i].area.p2.x + 2*Dimensions.margin_px,
+        this.diagrams[i].area.p1.y + Dimensions.margin_px
       );
 
       moveUpButton.style('padding', 0);
@@ -110,8 +110,8 @@ class Project{
       Styles.setButtonStyle(moveDownButton);
       moveDownButton.size(buttonSideLength_px, buttonSideLength_px);
       moveDownButton.position(
-        this.diagrams[i].area.p2.x + 2*Dimensions.margin,
-        this.diagrams[i].area.p1.y + 2*Dimensions.margin + buttonSideLength_px
+        this.diagrams[i].area.p2.x + 2*Dimensions.margin_px,
+        this.diagrams[i].area.p1.y + 2*Dimensions.margin_px + buttonSideLength_px
       );
 
       moveDownButton.style('padding', 0);
@@ -130,8 +130,8 @@ class Project{
     Styles.setButtonStyle(removeButton);
     removeButton.size(sideLength_px, sideLength_px);
     removeButton.position(
-      this.diagrams[i].area.p2.x + 3*Dimensions.margin + sideLength_px,
-      this.diagrams[i].area.p1.y + Dimensions.margin + 0.5*(sideLength_px+Dimensions.margin)
+      this.diagrams[i].area.p2.x + 3*Dimensions.margin_px + sideLength_px,
+      this.diagrams[i].area.p1.y + Dimensions.margin_px + 0.5*(sideLength_px+Dimensions.margin_px)
     );
 
     removeButton.style('padding', 0);

@@ -11,12 +11,12 @@ class HighState{
 
     this.p1 = 
       new Point(
-        diagram.statesArea.p1.x + this.start_steps * diagram.stepSize,
+        diagram.statesArea.p1.x + this.start_steps * diagram.stepSize_px,
         diagram.statesArea.p1.y
       );
     this.p2 = 
       new Point(
-        this.p1.x + this.length_steps * diagram.stepSize,
+        this.p1.x + this.length_steps * diagram.stepSize_px,
         diagram.statesArea.p2.y
       );
   }

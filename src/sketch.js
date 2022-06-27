@@ -255,6 +255,7 @@ function keyReleased(){
 }
 
 function windowResized(){
+  project.setTicks(project.ticks)
   redraw();
 }
 
@@ -285,20 +286,20 @@ function clearProject(){
 
 function displayDiagramNameInput(diagram){
   nameInput = createInput();
-  nameInput.size(Dimensions.nameWidth, Dimensions.nameInputHeight);
+  nameInput.size(Dimensions.nameWidth_px, Dimensions.nameInputHeight_px);
   nameInput.position(
     diagram.nameArea.p1.x, 
-    0.5 * (diagram.nameArea.p1.y + diagram.nameArea.p2.y -Dimensions.nameInputHeight),
+    0.5 * (diagram.nameArea.p1.y + diagram.nameArea.p2.y -Dimensions.nameInputHeight_px),
     'absolute');
   nameInput.value(diagram.name);
 }
 
 function displayProjectNameInput(menuDiv){
   let nameInput = createInput();
-  nameInput.size(menuDiv.width - 2*Dimensions.nameWidth, Dimensions.nameInputHeight);
+  nameInput.size(menuDiv.width - 2*Dimensions.nameWidth_px, Dimensions.nameInputHeight_px);
   nameInput.position(
-    menuDiv.x + Dimensions.margin, 
-    menuDiv.y + Dimensions.margin + 90,
+    menuDiv.x + Dimensions.margin_px, 
+    menuDiv.y + Dimensions.margin_px + 90,
     'absolute');
     nameInput.value(project.name);
 
@@ -315,8 +316,8 @@ function displayProjectNameInput(menuDiv){
 
 function drawMenu(){
   let menuDiv = createDiv();
-  menuDiv.position(Dimensions.menuX, Dimensions.menuY);
-  menuDiv.size(Dimensions.menuWidth, windowHeight-(2*Dimensions.margin));
+  menuDiv.position(Dimensions.menuX_px, Dimensions.menuY_px);
+  menuDiv.size(Dimensions.leftMenuWidth_px, windowHeight-(2*Dimensions.margin_px));
   menuDiv.style('color', Colors.ticks);
   menuDiv.style('font-family', Dimensions.nameFont);
   menuDiv.style('font-weight', 'bold');
@@ -346,7 +347,7 @@ function drawMenuLogo(menuDiv){
 function drawMenuName(menuDiv) {
   let nameDiv = createDiv();
   nameDiv.parent(menuDiv);
-  nameDiv.style('margin', Dimensions.margin);
+  nameDiv.style('margin', Dimensions.margin_px);
   nameDiv.style('border', 'white');
   nameDiv.style('border-top-style', 'solid');
   nameDiv.style('border-bottom-style', 'solid');
@@ -366,7 +367,7 @@ function drawMenuName(menuDiv) {
 function drawMenuTicks(menuDiv) {
   let ticksDiv = createDiv();
   ticksDiv.parent(menuDiv);
-  ticksDiv.style('margin', Dimensions.margin);
+  ticksDiv.style('margin', Dimensions.margin_px);
 
   let ticksParagraph = createP('Ticks:');
   ticksParagraph.parent(ticksDiv);
@@ -379,8 +380,8 @@ function drawMenuTicks(menuDiv) {
     button.parent(ticksDiv);
 
     Styles.setButtonStyle(button);
-    button.style('margin-right', Dimensions.margin*0.5);
-    button.size(4*Dimensions.margin, 3*Dimensions.margin);
+    button.style('margin-right', Dimensions.margin_px*0.5);
+    button.size(4*Dimensions.margin_px, 3*Dimensions.margin_px);
 
 
     button.mouseReleased(function () {
@@ -393,7 +394,7 @@ function drawMenuAddDiagram(menuDiv) {
   let button = createButton('Add diagram');
   button.parent(menuDiv);
   Styles.setButtonStyle(button);
-  button.style('margin', Dimensions.margin);
+  button.style('margin', Dimensions.margin_px);
 
   button.mouseReleased(function () {
     project.addDiagram(project.diagrams.length);
@@ -403,7 +404,7 @@ function drawMenuAddDiagram(menuDiv) {
 function drawMenuImportExport(menuDiv){
   let importExportDiv = createDiv();
   importExportDiv.parent(menuDiv);
-  importExportDiv.style('margin', Dimensions.margin);
+  importExportDiv.style('margin', Dimensions.margin_px);
 
   let fileInput = createFileInput(importProject);
   fileInput.parent(importExportDiv);
@@ -415,7 +416,7 @@ function drawMenuImportExport(menuDiv){
   let importButton = createButton('Import');
   importButton.parent(importExportDiv);
   Styles.setButtonStyle(importButton);
-  importButton.style('margin-right', Dimensions.margin*0.5);
+  importButton.style('margin-right', Dimensions.margin_px*0.5);
 
   importButton.mouseReleased(function() {
     fileElem = document.getElementById(inputId);
@@ -425,7 +426,7 @@ function drawMenuImportExport(menuDiv){
   let exportButton = createButton('Export');
   exportButton.parent(importExportDiv);
   Styles.setButtonStyle(exportButton);
-  exportButton.style('margin-right', Dimensions.margin*0.5);
+  exportButton.style('margin-right', Dimensions.margin_px*0.5);
 
   exportButton.mouseReleased(exportProject);
 }
@@ -436,8 +437,8 @@ function drawMenuClearAll(menuDiv) {
   Styles.setButtonStyle(button);
 
   button.style('position', 'absolute');
-  button.style('bottom', Dimensions.margin);
-  button.style('left', Dimensions.margin);
+  button.style('bottom', Dimensions.margin_px);
+  button.style('left', Dimensions.margin_px);
 
   button.mouseReleased(clearProject);
 }
@@ -466,3 +467,23 @@ function importProject(file){
     redraw();
   } 
 }
+
+function diagramMaxWidth_px(){
+  let maxWidth_px = 
+    containerWidth_px()
+    - (3*Dimensions.margin_px
+      + Dimensions.nameWidth_px);
+  return maxWidth_px;
+}
+
+function containerWidth_px(){
+  let width_px = 
+    windowWidth
+    - (4*Dimensions.margin_px
+      + Dimensions.leftMenuWidth_px
+      + Dimensions.rightMenuWidth_px
+      + Dimensions.containerHeight_px);
+
+  console.log('container ' + width_px);
+  return width_px; 
+} 
