@@ -158,6 +158,9 @@ function mouseReleased() {
 
 function keyReleased(){
   switch (key){
+    case 'q':
+      showShortcuts();
+    break;
     case 'w':
       selectedHighStates.forEach(
         (state, i) => 
@@ -484,6 +487,5 @@ function containerWidth_px(){
       + Dimensions.rightMenuWidth_px
       + Dimensions.containerHeight_px);
 
-  console.log('container ' + width_px);
   return width_px; 
 } 
