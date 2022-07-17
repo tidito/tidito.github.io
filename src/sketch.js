@@ -158,7 +158,7 @@ function mouseReleased() {
 
 function keyReleased(){
   switch (key){
-    case 'q':
+    case '?':
       showShortcuts();
     break;
     case 'w':

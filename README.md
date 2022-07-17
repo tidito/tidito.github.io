@@ -16,12 +16,17 @@ You are able to:
 * [d] - move selected high states to the right by 1
 * [shift] + [w/s/a/d] - repeat the action 5 times
 * [x ] - delete selected high states
-* [ctrl] + click - multi selection 
+* [ctrl] + click - multi selection
+* [shift] + ? - show shortcuts list
 
 ## To do
-* Display keybord shortcuts description after pressing [?]
-* Display the length of selected and currently drawn high state
+* Add button in menu to display shortcuts
+* Display the length of currently drawn high state
 * Add editable label to every high state
+* Add right sidebar with editable parameters for selected high state
+  * Starting point
+  * Length
+  * Label
 * Add a guideline - vertical line that constantly follow mouse cursor and snaps to ticks
 * Add on/off toggle for the guideline
 * Add editable text area for project notes with markdown support
