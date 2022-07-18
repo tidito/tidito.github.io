@@ -20,7 +20,6 @@ You are able to:
 * [shift] + ? - show shortcuts list
 
 ## To do
-* Add button in menu to display shortcuts
 * Display the length of currently drawn high state
 * Add editable label to every high state
 * Add right sidebar with editable parameters for selected high state
