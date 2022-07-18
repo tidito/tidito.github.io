@@ -333,6 +333,7 @@ function drawMenu(){
   drawMenuTicks(menuDiv);
   drawMenuAddDiagram(menuDiv);
   drawMenuClearAll(menuDiv);
+  drawMenuShortcuts(menuDiv);
   drawMenuImportExport(menuDiv);
 }
 
@@ -432,6 +433,18 @@ function drawMenuImportExport(menuDiv){
   exportButton.style('margin-right', Dimensions.margin_px*0.5);
 
   exportButton.mouseReleased(exportProject);
+}
+
+function drawMenuShortcuts(menuDiv) {
+  let button = createButton('Shortcuts');
+  button.parent(menuDiv);
+  Styles.setButtonStyle(button);
+
+  button.style('position', 'absolute');
+  button.style('bottom', button.height + 2*Dimensions.margin_px);
+  button.style('left', Dimensions.margin_px);
+
+  button.mouseReleased(showShortcuts);
 }
 
 function drawMenuClearAll(menuDiv) {
